@@ -67,7 +67,7 @@ netpos/
 
 1. Clone o repositório:
 ```bash
-git clone [https://github.com/seu-utilizador/netpos.git](https://github.com/seu-utilizador/netpos.git)
+git clone [https://github.com/claudiovictors/netpos.git](https://github.com/claudiovictors/netpos.git)
 cd netpos
 
 ```
@@ -87,6 +87,7 @@ php -S 127.0.0.1:3000 -t public
 
 ```
 
+> OBS: Nada de usar php <= 8.0 kkk
 
 
 ---
