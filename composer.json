@@ -1,0 +1,51 @@
+{
+    "name": "slenix/slenix",
+    "description": "Slenix is a fast and flexible framework for building REST APIs and web applications",
+    "keywords": ["slenix", "framework", "orm", "route", "cli"],
+    "homepage": "https://slenix.vercel.app",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cláudio Victor",
+            "email": "barrosclaudio147@gmail.com",
+            "role": "Developer",
+            "homepage": "https://slenix.vercel.app"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "slenix/veil": "^1.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Slenix\\": "src/"
+        },
+        "files": [
+            "src/Supports/Helpers/Helpers.php"
+        ]
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "scripts": {
+        "post-create-project-cmd": [
+            "@php -r \"if (!file_exists('.env') && file_exists('.env.example')) { copy('.env.example', '.env'); echo '[INFO]  .env file created successfully.'.PHP_EOL; }\"",
+            "@php celestial key:generate --ansi",
+            "@php celestial frontend:install"
+        ],
+        "post-install-cmd": [
+            "@php -r \"if (!file_exists('.env') && file_exists('.env.example')) { copy('.env.example', '.env'); echo '[INFO]  .env file created successfully.'.PHP_EOL; }\""
+        ],
+        "serve": "php celestial serve"
+    },
+    "config": {
+        "sort-packages": true,
+        "process-timeout": 0
+    },
+    "support": {
+        "email": "barrosclaudio147@gmail.com",
+        "issues": "https://github.com/claudiovictors/slenix/issues",
+        "source": "https://github.com/claudiovictors/slenix"
+    }
+}

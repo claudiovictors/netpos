@@ -1,0 +1,41 @@
+/* ==========================================================================
+   NETPOS - STYLE.CSS
+   Ficheiro mestre de estilos. NÃO possui regras próprias;
+   apenas importa todos os módulos CSS na ordem correta de dependência e cascata.
+   ========================================================================== */
+
+/* 1. Reset, variáveis CSS globais, tipografia e layout base */
+@import url('global.css');
+
+/* 2. Barra de navegação superior (navbar azul, hambúrguer, utilizador) */
+@import url('header.css');
+
+/* 3. Barra lateral de navegação (expandida, colapsada e mobile) */
+@import url('sidebar.css');
+
+/* 4. Contentores tipo "box" e "small-box" de métricas */
+@import url('cards.css');
+
+/* 5. Botões planos estilo Bootstrap 3 e variantes */
+@import url('buttons.css');
+
+/* 6. Formulários, campos com ícones, estados de erro dinâmicos e tabs */
+@import url('forms.css');
+
+/* 7. Tabelas administrativas, labels/badges, paginação e barra de ferramentas */
+@import url('tables.css');
+
+/* 8. Janelas modais dialogurais e menus suspensos (dropdowns) */
+@import url('models.css');
+
+/* 9. Notificações flutuantes empilhadas no canto inferior direito (Toasts) */
+@import url('toast.css');
+
+/* 10. Regras de impressão para relatórios e faturas limpas */
+@import url('print.css');
+
+/* 11. Estilos específicos para o ecrã de login */
+@import url('login.css');
+
+/* 12. Estilos específicos para o ecrã de registo */
+@import url('register.css');

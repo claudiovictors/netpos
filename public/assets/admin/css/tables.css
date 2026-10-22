@@ -1,0 +1,318 @@
+/* ==========================================================================
+   NETPOS - TABLES.CSS
+   Tabelas administrativas estilo laravel-admin (AdminLTE 2)
+   Barra de ferramentas superior, badges/labels coloridos e paginação
+   ========================================================================== */
+
+/* ===== 1. BARRA DE FERRAMENTAS DA TABELA (BOX-HEADER TOOLS) ===== */
+.table-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 15px;
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.table-toolbar-left,
+.table-toolbar-right {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Área de filtros expansível */
+.filter-box {
+  background-color: #fafafa;
+  border-bottom: 1px solid var(--color-border);
+  padding: 15px;
+  display: none;
+}
+
+.filter-box.show {
+  display: block;
+}
+
+/* ===== 2. ESTRUTURA DA TABELA ===== */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 0;
+  border-collapse: collapse;
+  background-color: transparent;
+}
+
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  padding: 8px 10px;
+  line-height: 1.42857143;
+  vertical-align: middle;
+  border-top: 1px solid var(--color-border-light);
+  font-size: 13px;
+  color: #444444;
+}
+
+.table > thead > tr > th {
+  vertical-align: bottom;
+  border-bottom: 2px solid var(--color-border-light);
+  background-color: #ffffff;
+  font-weight: 700;
+  color: #333333;
+  white-space: nowrap;
+}
+
+.table-bordered {
+  border: 1px solid var(--color-border-light);
+}
+
+.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > td,
+.table-bordered > tfoot > tr > td {
+  border: 1px solid var(--color-border-light);
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #fcfcfc;
+}
+
+.table-hover > tbody > tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Coluna de seleção (checkbox) */
+.table th.col-checkbox,
+.table td.col-checkbox {
+  width: 40px;
+  text-align: center;
+  padding-left: 12px;
+}
+
+/* Coluna de ordenação */
+.sortable-header {
+  cursor: pointer;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sortable-header:hover {
+  color: var(--color-primary);
+}
+
+.sortable-header .sort-icon {
+  font-size: 11px;
+  color: #999999;
+}
+
+/* Coluna de ações (ícones editar e eliminar) */
+.table td.col-actions {
+  white-space: nowrap;
+  text-align: center;
+}
+
+.action-btn {
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 2px;
+  text-decoration: none;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.action-btn.action-delete {
+  color: var(--color-danger);
+}
+
+.action-btn:hover {
+  color: var(--color-primary-dark);
+  background-color: #eef4f9;
+  text-decoration: none;
+}
+
+.action-btn.action-delete:hover {
+  color: var(--color-danger);
+  background-color: #fdeeee;
+}
+
+/* ===== 3. LABELS E BADGES ESTILO BOOTSTRAP 3 / LARAVEL-ADMIN ===== */
+.label {
+  display: inline-block;
+  padding: 3px 7px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  color: #ffffff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  border-radius: var(--border-radius-base);
+}
+
+/* Azul claro característico para códigos e slugs como no screenshot */
+.label-info {
+  background-color: var(--color-info);
+}
+
+.label-primary {
+  background-color: var(--color-primary);
+}
+
+.label-success {
+  background-color: var(--color-success);
+}
+
+.label-warning {
+  background-color: var(--color-warning);
+}
+
+.label-danger {
+  background-color: var(--color-danger);
+}
+
+.label-default {
+  background-color: #777777;
+}
+
+/* Indicador de stock abaixo do mínimo a vermelho sólido */
+.stock-warning-text {
+  color: var(--color-danger);
+  font-weight: 700;
+}
+
+/* ===== 4. RODAPÉ DA TABELA E PAGINAÇÃO ===== */
+.table-pagination-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 15px;
+  background-color: #ffffff;
+  border-top: 1px solid var(--color-border-light);
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pagination-per-page {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #555555;
+  font-size: 12px;
+}
+
+.pagination-per-page select {
+  height: 26px;
+  padding: 2px 6px;
+  font-size: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-base);
+  background-color: #ffffff;
+  color: #333333;
+}
+
+/* Lista de Paginação « 1 2 3 » */
+.pagination {
+  display: flex;
+  padding-left: 0;
+  margin: 0;
+  border-radius: var(--border-radius-base);
+  list-style: none;
+}
+
+.pagination > li {
+  display: inline;
+}
+
+.pagination > li > a,
+.pagination > li > span {
+  position: relative;
+  float: left;
+  padding: 4px 10px;
+  line-height: 1.42857143;
+  text-decoration: none;
+  color: var(--color-primary);
+  background-color: #ffffff;
+  border: 1px solid var(--color-border);
+  margin-left: -1px;
+  font-size: 12px;
+  transition: all 0.15s ease;
+}
+
+.pagination > li:first-child > a,
+.pagination > li:first-child > span {
+  margin-left: 0;
+  border-bottom-left-radius: var(--border-radius-base);
+  border-top-left-radius: var(--border-radius-base);
+}
+
+.pagination > li:last-child > a,
+.pagination > li:last-child > span {
+  border-bottom-right-radius: var(--border-radius-base);
+  border-top-right-radius: var(--border-radius-base);
+}
+
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+  z-index: 2;
+  color: var(--color-primary-dark);
+  background-color: #eeeeee;
+  border-color: #dddddd;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  z-index: 3;
+  color: #ffffff;
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  cursor: default;
+}
+
+.pagination > .disabled > span,
+.pagination > .disabled > span:hover,
+.pagination > .disabled > span:focus,
+.pagination > .disabled > a,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > a:focus {
+  color: #777777;
+  background-color: #ffffff;
+  border-color: #dddddd;
+  cursor: not-allowed;
+}

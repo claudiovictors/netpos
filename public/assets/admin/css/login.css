@@ -1,0 +1,429 @@
+/* ==========================================================================
+   NETPOS - LOGIN.CSS
+   Clone visual exato da interface de autenticação do WordPress (wp-login.php)
+   Contém todos os estilos comuns partilhados entre login.html e register.html
+   ========================================================================== */
+
+/* ===== 1. VARIÁVEIS CSS (PALETA DO WORDPRESS + COR PRIMÁRIA NETPOS) ===== */
+:root {
+  /* Cor primária sólida (NetPos azul #3c8dbc; para WordPress puro use #2271b1) */
+  --cor-primaria: #3c8dbc;
+  --cor-primaria-hover: #2f7aa6;
+
+  /* Cores estruturais do WordPress wp-login.php */
+  --wp-bg-body: #f0f0f1;
+  --wp-bg-card: #ffffff;
+  --wp-text-body: #3c434a;
+  --wp-text-label: #1e1e1e;
+  --wp-text-links: #50575e;
+  --wp-text-hint: #646970;
+
+  /* Bordas e separadores */
+  --wp-border-card: #c3c4c7;
+  --wp-border-input: #8c8f94;
+
+  /* Cores de avisos e validação */
+  --wp-notice-error: #d63638;
+  --wp-notice-success: #00a32a;
+  --wp-notice-info: #72aee6;
+
+  /* Tipografia do sistema (sem Google Fonts) */
+  --wp-font-system:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+    Cantarell, "Helvetica Neue", sans-serif;
+}
+
+/* ===== 2. CORPO DA PÁGINA (PAGE BODY) ===== */
+body.login-page {
+  background-color: var(--wp-bg-body);
+  color: var(--wp-text-body);
+  font-family: var(--wp-font-system);
+  font-size: 13px;
+  line-height: 1.4;
+  min-height: 100vh;
+  margin: 0;
+  padding: 9% 0 32px 0; /* Afastado ~8% do topo, sem centrar na vertical */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* ===== 3. CONTENTOR PRINCIPAL (#login) ===== */
+#login,
+.login-container {
+  width: 405px; /* Largura melhorada e mais confortável para ecrãs modernos */
+  max-width: 92vw;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Modificador para ecrãs mais largos de registo com 2 colunas */
+.login-container-wide {
+  width: 540px;
+  max-width: 92vw;
+}
+
+/* Grelha de duas colunas para formulários compactos */
+.form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 0;
+}
+
+.form-col-6 {
+  flex: 1 1 50%;
+  min-width: 0; /* Previne overflow de flex items */
+}
+
+@media screen and (max-width: 580px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  .form-col-6 {
+    flex: 1 1 100%;
+  }
+}
+
+/* ===== 4. LOGÓTIPO NETPOS (CENTRADOR ACIMA DO CARTÃO) ===== */
+.login-logo {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.login-logo a {
+  display: inline-block;
+  text-decoration: none;
+  outline: none;
+}
+
+/* ===== 5. AVISOS E ALERTAS DO WORDPRESS (NOTICES) ===== */
+.notice,
+.login-notice {
+  background: var(--wp-bg-card);
+  border-left: 4px solid var(--wp-notice-info);
+  padding: 12px;
+  margin-left: 0;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--wp-text-body);
+  box-sizing: border-box;
+}
+
+.notice-error,
+.login-notice-error {
+  border-left-color: var(--wp-notice-error);
+}
+
+.form-error {
+  color: var(--wp-notice-error);
+}
+
+.notice-success,
+.login-notice-success {
+  border-left-color: var(--wp-notice-success);
+}
+
+.notice-info,
+.login-notice-info {
+  border-left-color: var(--wp-notice-info);
+}
+
+.notice p,
+.login-notice p {
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== 6. FORMULÁRIO / CARTÃO (#loginform) ===== */
+#loginform,
+#registerform,
+.login-form-card {
+  background: var(--wp-bg-card);
+  border: 1px solid var(--wp-border-card);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  border-radius: 0; /* Borda reta autêntica do WordPress */
+  padding: 26px 24px 34px;
+  font-weight: 400;
+  box-sizing: border-box;
+  margin-bottom: 0;
+}
+
+/* Sem título dentro do cartão */
+.login-form-card h2,
+.login-form-card h3 {
+  display: none;
+}
+
+/* ===== 7. RÓTULOS E CAMPOS (LABELS & INPUTS) ===== */
+.form-field-group {
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.form-field-group label,
+#loginform label,
+#registerform label {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--wp-text-label);
+  display: inline-block;
+  margin-bottom: 3px;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+/* Inputs de texto estilo WordPress */
+.input,
+input[type="text"].input,
+input[type="password"].input,
+input[type="email"].input,
+input[type="tel"].input {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 20px;
+  line-height: 1.33333333;
+  min-height: 40px;
+  padding: 3px 8px;
+  margin: 0 0 10px 0;
+  border: 1px solid var(--wp-border-input);
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: #2c3338;
+  font-family: inherit;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+}
+
+/* Estado de Foco (Borda e anel azul do sistema, sem outline) */
+.input:focus,
+input[type="text"].input:focus,
+input[type="password"].input:focus,
+input[type="email"].input:focus,
+input[type="tel"].input:focus {
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 1px var(--cor-primaria);
+  outline: 2px solid transparent;
+}
+
+/* Estado de Erro Dinâmico (@error_class) */
+.input.has-error,
+.input.is-invalid,
+.has-error .input {
+  border-color: var(--wp-notice-error) !important;
+}
+
+.input.has-error:focus,
+.input.is-invalid:focus,
+.has-error .input:focus {
+  border-color: var(--wp-notice-error) !important;
+  box-shadow: 0 0 0 1px var(--wp-notice-error) !important;
+}
+
+/* Mensagem de erro sob o campo */
+.help-block {
+  display: block;
+  font-size: 13px;
+  color: var(--wp-notice-error);
+  margin-bottom: 12px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+/* ===== 8. CAMPO DE PALAVRA-PASSE COM BOTÃO DE OLHO ===== */
+.password-input-wrapper,
+.user-pass-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.password-input-wrapper .input,
+.user-pass-wrap .input {
+  padding-right: 42px;
+  margin-bottom: 16px;
+}
+
+/* Botão do olho no canto direito interno do campo */
+.btn-toggle-password,
+.wp-hide-pw {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 40px;
+  min-height: 40px;
+  width: 40px;
+  border: none;
+  background: transparent;
+  color: var(--wp-text-links);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  transition: color 0.15s ease;
+}
+
+.btn-toggle-password:hover,
+.btn-toggle-password:focus,
+.wp-hide-pw:hover,
+.wp-hide-pw:focus {
+  color: var(--cor-primaria);
+}
+
+/* ===== 9. LINHA INFERIOR (LEMBRAR-ME E BOTÃO INICIAR SESSÃO) ===== */
+.login-actions-row,
+.forgetmenot-and-submit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+  margin-bottom: 0;
+  clear: both;
+}
+
+/* Checkbox quadrado estilo WordPress */
+.forgetmenot {
+  gap: 5px;
+  display: flex;
+  margin: 0;
+  align-items: center;
+  color: var(--wp-text-links);
+}
+
+.forgetmenot label {
+  cursor: pointer;
+  color: var(--wp-text-links);
+}
+
+.forgetmenot input[type="checkbox"],
+.wp-checkbox {
+  appearance: auto;
+  -webkit-appearance: checkbox;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--wp-border-input);
+  border-radius: 4px;
+  accent-color: var(--cor-primaria);
+  cursor: pointer;
+}
+
+/* Botão principal sólido estilo WordPress */
+.button-primary,
+.btn-wp-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--cor-primaria);
+  border: 1px solid var(--cor-primaria);
+  color: #ffffff;
+  font-size: 13px;
+  line-height: 2.15384615;
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  white-space: nowrap;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-weight: 400;
+  box-shadow: none;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.button-primary:hover,
+.button-primary:focus,
+.btn-wp-primary:hover,
+.btn-wp-primary:focus {
+  background-color: var(--cor-primaria-hover);
+  border-color: var(--cor-primaria-hover);
+  color: #ffffff;
+  outline: none;
+}
+
+.button-primary:active,
+.btn-wp-primary:active {
+  background-color: var(--cor-primaria-hover);
+  border-color: var(--cor-primaria-hover);
+}
+
+/* ===== 10. LINKS POR BAIXO DO CARTÃO (#nav & #backtoblog) ===== */
+#nav,
+.login-nav-links {
+  margin: 24px 0 0;
+  padding: 0 24px;
+  font-size: 13px;
+  color: var(--wp-text-links);
+  text-align: left;
+}
+
+#backtoblog,
+.login-backtoblog {
+  margin: 16px 0 0;
+  padding: 0 24px;
+  font-size: 13px;
+  text-align: left;
+}
+
+#nav a,
+#backtoblog a,
+.login-nav-links a,
+.login-backtoblog a {
+  color: var(--wp-text-links);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+#nav a:hover,
+#backtoblog a:hover,
+.login-nav-links a:hover,
+.login-backtoblog a:hover {
+  color: var(--cor-primaria);
+  text-decoration: none;
+}
+
+/* ===== 11. RESPONSIVIDADE (ECRÃS PEQUENOS < 400px) ===== */
+@media screen and (max-width: 400px) {
+  body.login-page {
+    padding-top: 20px;
+  }
+
+  #login,
+  .login-container {
+    width: 100%;
+    max-width: calc(100% - 40px);
+    margin: 0 20px;
+  }
+
+  .input,
+  input[type="text"].input,
+  input[type="password"].input,
+  input[type="email"].input,
+  input[type="tel"].input {
+    font-size: 18px;
+  }
+
+  #loginform,
+  #registerform,
+  .login-form-card {
+    padding: 20px 16px 24px;
+  }
+
+  #nav,
+  #backtoblog,
+  .login-nav-links,
+  .login-backtoblog {
+    padding: 0 16px;
+  }
+}

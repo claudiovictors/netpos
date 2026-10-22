@@ -1,0 +1,121 @@
+/* ==========================================================================
+   NETPOS - TOAST.CSS
+   Sistema de alertas e notificações flutuantes (Toasts)
+   Posicionado SEMPRE no canto inferior direito (bottom-right), empilhados
+   ========================================================================== */
+
+/* Contentor fixo de notificações no canto inferior direito */
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+  pointer-events: none;
+  max-width: 360px;
+  width: calc(100% - 40px);
+}
+
+/* Cartão do Toast */
+.toast-item {
+  position: relative;
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  background-color: #ffffff;
+  border: 1px solid var(--color-border);
+  border-left: 5px solid var(--color-primary);
+  border-radius: var(--border-radius-base);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+}
+
+.toast-item.toast-show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.toast-item.toast-hide {
+  opacity: 0;
+  transform: translateX(50px);
+}
+
+/* Ícone do Toast */
+.toast-item .toast-icon {
+  font-size: 18px;
+  line-height: 1;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* Conteúdo de Texto */
+.toast-item .toast-content {
+  flex-grow: 1;
+}
+
+.toast-item .toast-title {
+  font-weight: 700;
+  font-size: 13px;
+  color: #333333;
+  margin-bottom: 2px;
+}
+
+.toast-item .toast-message {
+  font-size: 12px;
+  color: #666666;
+  line-height: 1.35;
+}
+
+/* Botão Fechar */
+.toast-item .toast-close-btn {
+  background: transparent;
+  border: none;
+  color: #aaaaaa;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 2px 4px;
+  margin-left: auto;
+  transition: color 0.15s ease;
+}
+
+.toast-item .toast-close-btn:hover {
+  color: #333333;
+}
+
+/* Cores por tipo de alerta (Cores sólidas sem gradientes) */
+.toast-item.toast-success {
+  border-left-color: var(--color-success);
+}
+.toast-item.toast-success .toast-icon {
+  color: var(--color-success);
+}
+
+.toast-item.toast-danger,
+.toast-item.toast-error {
+  border-left-color: var(--color-danger);
+}
+.toast-item.toast-danger .toast-icon,
+.toast-item.toast-error .toast-icon {
+  color: var(--color-danger);
+}
+
+.toast-item.toast-warning {
+  border-left-color: var(--color-warning);
+}
+.toast-item.toast-warning .toast-icon {
+  color: var(--color-warning);
+}
+
+.toast-item.toast-info {
+  border-left-color: var(--color-cyan);
+}
+.toast-item.toast-info .toast-icon {
+  color: var(--color-cyan);
+}

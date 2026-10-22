@@ -1,0 +1,47 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Guest Middleware
+|--------------------------------------------------------------------------
+|
+| This middleware prevents authenticated users from accessing routes 
+| intended only for guests (like login or registration pages). 
+| If logged in, they are redirected to the dashboard.
+|
+*/
+
+declare(strict_types=1);
+
+namespace App\Middlewares;
+
+use Slenix\Http\Request;
+use Slenix\Http\Response;
+use Slenix\Http\Middlewares\Middleware;
+
+class GuestMiddleware implements Middleware
+{
+    /**
+     * Blocks authenticated users from guest-only routes.
+     * JSON clients receive 200 + { redirect }; browsers are redirected.
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param callable $next
+     * @return mixed
+     */
+    public function handle(Request $request, Response $response, callable $next): mixed
+    {
+        if (auth()->check()) {
+            if ($request->expectsJson()) {
+                $response->json(['redirect' => route('dashboard')], 200);
+                return null;
+            }
+
+            $response->redirect(route('dashboard'));
+            return null;
+        }
+
+        return $next($request, $response);
+    }
+}

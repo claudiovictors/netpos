@@ -1,0 +1,343 @@
+/* ==========================================================================
+   NETPOS - ERROR.CSS
+   Folha de estilos isolada e independente para páginas de erro personalizadas
+   Sem frameworks, cores sólidas e planas (estilo AdminLTE 2 / WordPress)
+   ========================================================================== */
+
+/* ===== 1. VARIÁVEIS CSS (PALETA INDEPENDENTE) ===== */
+:root {
+  /* Cores estruturais */
+  --error-bg-body: #f0f0f1;
+  --error-bg-card: #ffffff;
+  --error-text-body: #3c434a;
+  --error-text-title: #1e1e1e;
+  --error-text-muted: #50575e;
+  --error-text-subtle: #646970;
+  --error-border-card: #c3c4c7;
+
+  /* Cores de erro por código (cores planas sem gradientes) */
+  --color-error-403: #f39c12; /* Aviso (Laranja) */
+  --color-error-404: #3c8dbc; /* Azul NetPos */
+  --color-error-405: #f39c12; /* Aviso */
+  --color-error-419: #f39c12; /* Aviso */
+  --color-error-429: #f39c12; /* Aviso */
+  --color-error-500: #dd4b39; /* Vermelho Perigo */
+  --color-error-503: #00c0ef; /* Azul-claro */
+  --color-error-default: #777777; /* Cinzento Padrão */
+
+  /* Botões estilo Bootstrap 3 / AdminLTE 2 */
+  --btn-primary-bg: #3c8dbc;
+  --btn-primary-hover: #2f7aa6;
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-border: #c3c4c7;
+  --btn-secondary-hover: #f7f7f7;
+
+  /* Tipografia do sistema (sem fontes externas para máxima resiliência) */
+  --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+/* ===== 2. RESET E ESTRUTURA GERAL DA PÁGINA ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body.error-page {
+  background-color: var(--error-bg-body);
+  color: var(--error-text-body);
+  font-family: var(--font-system);
+  font-size: 14px;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 30px 16px;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Contentor central com largura máxima de 480px */
+.error-container {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* ===== 3. LOGÓTIPO NETPOS ===== */
+.error-logo {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.error-logo a {
+  display: inline-block;
+  text-decoration: none;
+  outline: none;
+}
+
+.error-logo img,
+.error-logo svg {
+  display: block;
+  width: 180px;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* ===== 4. CARTÃO DO ERRO (CARD PRINCIPAL) ===== */
+.error-card {
+  background-color: var(--error-bg-card);
+  border: 1px solid var(--error-border-card);
+  border-radius: 0; /* Cantos retos clássicos */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  padding: 32px 28px;
+  text-align: center;
+  position: relative;
+  border-top: 4px solid var(--color-error-default); /* Cor padrão caso não seja especificada */
+}
+
+/* Cores da borda superior por tipo de erro */
+.error-card.error-403 { border-top-color: var(--color-error-403); }
+.error-card.error-404 { border-top-color: var(--color-error-404); }
+.error-card.error-405 { border-top-color: var(--color-error-405); }
+.error-card.error-419 { border-top-color: var(--color-error-419); }
+.error-card.error-429 { border-top-color: var(--color-error-429); }
+.error-card.error-500 { border-top-color: var(--color-error-500); }
+.error-card.error-503 { border-top-color: var(--color-error-503); }
+.error-card.error-default { border-top-color: var(--color-error-default); }
+
+/* Ícone decorativo Font Awesome */
+.error-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+  display: inline-block;
+  line-height: 1;
+}
+
+.error-card.error-403 .error-icon,
+.error-card.error-405 .error-icon,
+.error-card.error-419 .error-icon,
+.error-card.error-429 .error-icon { color: var(--color-error-403); }
+.error-card.error-404 .error-icon { color: var(--color-error-404); }
+.error-card.error-500 .error-icon { color: var(--color-error-500); }
+.error-card.error-503 .error-icon { color: var(--color-error-503); }
+.error-card.error-default .error-icon { color: var(--color-error-default); }
+
+/* Código do Erro Gigante (~96px) */
+.error-code {
+  font-size: 96px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -2px;
+  margin: 0 0 10px 0;
+  user-select: none;
+}
+
+.error-card.error-403 .error-code,
+.error-card.error-405 .error-code,
+.error-card.error-419 .error-code,
+.error-card.error-429 .error-code { color: var(--color-error-403); }
+.error-card.error-404 .error-code { color: var(--color-error-404); }
+.error-card.error-500 .error-code { color: var(--color-error-500); }
+.error-card.error-503 .error-code { color: var(--color-error-503); }
+.error-card.error-default .error-code { color: var(--color-error-default); }
+
+/* Título do Erro (22px) */
+.error-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--error-text-title);
+  margin: 0 0 12px 0;
+  line-height: 1.3;
+}
+
+/* Mensagem Explicativa (14px) */
+.error-message {
+  font-size: 14px;
+  color: var(--error-text-muted);
+  line-height: 1.5;
+  margin: 0 0 24px 0;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Código de referência para suporte (Erro 500) */
+.error-reference {
+  font-size: 12px;
+  color: var(--error-text-subtle);
+  margin-top: 18px;
+  margin-bottom: 0;
+}
+
+.error-reference code {
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  background-color: #f0f0f1;
+  padding: 2px 6px;
+  border-radius: 2px;
+  color: #1e1e1e;
+  border: 1px solid #d2d6de;
+  font-size: 11px;
+}
+
+/* Detalhes técnicos para debug (apenas com config('app.debug')) */
+.error-debug-details {
+  margin-top: 20px;
+  text-align: left;
+  border: 1px solid #d2d6de;
+  border-radius: 2px;
+  background-color: #fafafa;
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+.error-debug-details summary {
+  font-weight: 600;
+  cursor: pointer;
+  color: #333333;
+  outline: none;
+  user-select: none;
+}
+
+.error-debug-details summary:hover {
+  color: var(--btn-primary-bg);
+}
+
+.error-debug-details pre {
+  margin-top: 8px;
+  margin-bottom: 0;
+  padding: 8px;
+  background-color: #222d32;
+  color: #ffffff;
+  border-radius: 2px;
+  max-height: 180px;
+  overflow: auto;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* ===== 5. BOTÕES DE ACÇÃO (ESTILO BOOTSTRAP 3 / PLANO) ===== */
+.error-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  font-family: inherit;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  min-height: 34px;
+  box-sizing: border-box;
+}
+
+.btn:focus,
+.btn:focus-visible {
+  outline: 2px solid var(--btn-primary-bg);
+  outline-offset: 1px;
+}
+
+/* Botão Primário (Azul NetPos #3c8dbc) */
+.btn-primary {
+  background-color: var(--btn-primary-bg);
+  border-color: var(--btn-primary-bg);
+  color: #ffffff;
+}
+
+.btn-primary:hover,
+.btn-primary:active {
+  background-color: var(--btn-primary-hover);
+  border-color: var(--btn-primary-hover);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Botão Secundário (Branco com borda cinzenta) */
+.btn-secondary {
+  background-color: var(--btn-secondary-bg);
+  border-color: var(--btn-secondary-border);
+  color: var(--error-text-body);
+}
+
+.btn-secondary:hover,
+.btn-secondary:active {
+  background-color: var(--btn-secondary-hover);
+  border-color: #a7aaad;
+  color: var(--error-text-title);
+  text-decoration: none;
+}
+
+/* Botão desativado (usado na contagem decrescente do 429) */
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.65;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ===== 6. RODAPÉ DO ERRO ===== */
+.error-footer {
+  margin-top: 24px;
+  font-size: 12px;
+  color: var(--error-text-subtle);
+  text-align: center;
+}
+
+/* ===== 7. RESPONSIVIDADE (ECRÃS PEQUENOS < 480px) ===== */
+@media screen and (max-width: 480px) {
+  body.error-page {
+    padding: 20px 12px;
+  }
+
+  .error-card {
+    padding: 24px 18px;
+  }
+
+  .error-code {
+    font-size: 72px;
+  }
+
+  .error-title {
+    font-size: 20px;
+  }
+
+  .error-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .error-actions .btn {
+    width: 100%;
+  }
+}

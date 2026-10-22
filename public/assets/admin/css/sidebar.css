@@ -1,0 +1,311 @@
+/* ==========================================================================
+   NETPOS - SIDEBAR.CSS
+   Sidebar lateral estilo AdminLTE 2 / laravel-admin (fundo claro/branco)
+   Suporte a modo expandido, colapsado (apenas ícones) e mobile com overlay
+   ========================================================================== */
+
+/* ===== 1. ESTRUTURA DA SIDEBAR PRINCIPAL ===== */
+.main-sidebar {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  min-height: calc(100% - var(--header-height));
+  background-color: #ffffff;
+  border-right: 1px solid var(--color-border);
+  z-index: 1020;
+  transition:
+    width 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Scrollbar sutil para a sidebar */
+.main-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+.main-sidebar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+/* Espaço do cabeçalho da sidebar / perfil rápido */
+.sidebar-user-panel {
+  padding: 12px 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--color-border-light);
+  background-color: #ffffff;
+}
+
+.sidebar-user-panel .image {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background-color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}
+
+.sidebar-user-panel .info {
+  line-height: 1.2;
+}
+
+.sidebar-user-panel .info p {
+  font-weight: 600;
+  margin-bottom: 3px;
+  color: #333333;
+}
+
+.sidebar-user-panel .info small {
+  font-size: 11px;
+  color: var(--color-success);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sidebar-user-panel .info small .status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-success);
+}
+
+/* Cabeçalho de secção no menu (ex: "MENU PRINCIPAL") */
+.sidebar-heading {
+  padding: 10px 15px 5px 15px;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #999999;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  background-color: #fafafa;
+  border-top: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+/* ===== 2. MENU NAVEGAÇÃO DA SIDEBAR ===== */
+.sidebar-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-menu > li {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+/* Links do menu de primeiro nível */
+.sidebar-menu > li > a {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  color: #444444;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.sidebar-menu > li > a > .nav-icon {
+  width: 22px;
+  font-size: 15px;
+  color: #555555;
+  text-align: center;
+  margin-right: 10px;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.sidebar-menu > li > a > .nav-text {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-menu > li > a > .pull-right-container {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sidebar-menu > li > a > .pull-right-container > .arrow-icon {
+  font-size: 11px;
+  transition: transform 0.2s ease;
+  color: #999999;
+}
+
+/* Estado Hover */
+.sidebar-menu > li:hover > a {
+  background-color: #f4f4f4;
+  color: #222222;
+}
+
+.sidebar-menu > li:hover > a > .nav-icon {
+  color: var(--color-primary);
+}
+
+/* Estado Activo */
+.sidebar-menu > li.active > a {
+  color: var(--color-primary);
+  background-color: #f4f8fa;
+  border-left-color: var(--color-primary);
+  font-weight: 600;
+}
+
+.sidebar-menu > li.active > a > .nav-icon {
+  color: var(--color-primary);
+}
+
+/* Submenu aberto */
+.sidebar-menu > li.menu-open > a > .pull-right-container > .arrow-icon {
+  transform: rotate(-90deg);
+}
+
+/* Submenu em cascata */
+.sidebar-menu .treeview-menu {
+  display: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #f9f9f9;
+  border-top: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.sidebar-menu > li.menu-open > .treeview-menu {
+  display: block;
+}
+
+.sidebar-menu .treeview-menu > li > a {
+  display: flex;
+  align-items: center;
+  padding: 8px 15px 8px 35px;
+  font-size: 13px;
+  color: #666666;
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.sidebar-menu .treeview-menu > li > a:hover {
+  color: #222222;
+  background-color: #eeeeee;
+}
+
+.sidebar-menu .treeview-menu > li.active > a {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.sidebar-menu .treeview-menu > li > a > i {
+  font-size: 8px;
+  margin-right: 8px;
+}
+
+/* Badges / contadores no menu */
+.sidebar-menu .badge {
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 2px;
+}
+
+/* ===== 3. MODO COLAPSADO (DESKTOP - APENAS ÍCONES) ===== */
+@media (min-width: 768px) {
+  .sidebar-collapse .main-sidebar {
+    width: var(--sidebar-collapsed-width);
+  }
+
+  .sidebar-collapse .sidebar-user-panel,
+  .sidebar-collapse .sidebar-heading,
+  .sidebar-collapse .sidebar-menu > li > a > .nav-text,
+  .sidebar-collapse .sidebar-menu > li > a > .pull-right-container {
+    display: none !important;
+  }
+
+  .sidebar-collapse .sidebar-menu > li > a {
+    padding: 15px 0;
+    justify-content: center;
+  }
+
+  .sidebar-collapse .sidebar-menu > li > a > .nav-icon {
+    margin-right: 0;
+    font-size: 18px;
+  }
+
+  /* Flyout menu flutuante ao passar o rato no item colapsado */
+  .sidebar-collapse .sidebar-menu > li:hover > a > .nav-text {
+    display: block !important;
+    position: absolute;
+    left: var(--sidebar-collapsed-width);
+    top: 0;
+    width: 200px;
+    height: 100%;
+    line-height: 48px;
+    background-color: var(--color-primary);
+    color: #ffffff;
+    padding-left: 15px;
+    z-index: 1050;
+    border-radius: 0 3px 3px 0;
+    font-size: 13px;
+  }
+
+  .sidebar-collapse .sidebar-menu > li:hover > .treeview-menu {
+    display: block !important;
+    position: absolute;
+    left: var(--sidebar-collapsed-width);
+    top: 100%;
+    width: 200px;
+    background-color: #ffffff;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--color-border);
+    border-left: none;
+    z-index: 1050;
+  }
+
+  .sidebar-collapse .sidebar-menu .treeview-menu > li > a {
+    padding-left: 15px;
+  }
+}
+
+/* ===== 4. MODO MOBILE COM OVERLAY ===== */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1019;
+}
+
+@media (max-width: 767px) {
+  .main-sidebar {
+    transform: translate(-100%, 0);
+  }
+
+  .sidebar-open .main-sidebar {
+    transform: translate(0, 0);
+  }
+
+  .sidebar-open .sidebar-overlay {
+    display: block;
+  }
+}

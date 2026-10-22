@@ -1,0 +1,50 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Auth Middleware
+|--------------------------------------------------------------------------
+|
+| This middleware ensures that the incoming request is from an 
+| authenticated user. If the user is not logged in, they will be 
+| redirected to the login page.
+|
+*/
+
+declare(strict_types=1);
+
+namespace App\Middlewares;
+
+use Slenix\Http\Request;
+use Slenix\Http\Response;
+use Slenix\Http\Middlewares\Middleware;
+
+class AuthMiddleware implements Middleware
+{
+     /**
+        * Ensures the request is authenticated.
+        * JSON clients receive 401; browser clients are redirected to /login.
+        *
+        * @param Request $request
+        * @param Response $response
+        * @param callable $next
+        * @return mixed
+    */
+    public function handle(Request $request, Response $response, callable $next): mixed
+    {
+        if (!auth()->check()|| auth()->user()->status !== 'active') {
+            if ($request->expectsJson()) {
+                $response->status(401)->json([
+                    'message' => 'Unauthenticated.',
+                    'redirect' => route('login'),
+                ], 200);
+                return null;
+            }
+
+            $response->redirect(route('login'));
+            return null;
+        }
+
+        return $next($request, $response);
+    }
+}

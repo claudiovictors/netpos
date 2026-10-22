@@ -1,0 +1,308 @@
+/* ==========================================================================
+   NETPOS - FORMS.CSS
+   Estilos de formulários, inputs, feedback icons, validação e tabs
+   Compatível com classes de erro dinâmicas e placeholders cinza
+   ========================================================================== */
+
+/* ===== 1. GRUPOS E RÓTULOS ===== */
+.form-group {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.form-group label,
+.control-label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #333333;
+}
+
+/* ===== 2. FORM-CONTROL (CAMPOS DE FORMULÁRIO) ===== */
+.form-control {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  color: #555555;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-base);
+  box-shadow: none;
+  font-family: var(--font-base);
+  transition: border-color 0.15s ease-in-out;
+}
+
+.form-control:focus {
+  border-color: var(--color-primary);
+  outline: 0;
+  box-shadow: none;
+}
+
+.form-control::placeholder {
+  color: #999999;
+  opacity: 1;
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 80px;
+  resize: vertical;
+}
+
+select.form-control {
+  cursor: pointer;
+}
+
+/* Modificadores de tamanho */
+.input-sm {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: var(--border-radius-base);
+}
+
+.input-lg {
+  height: 42px;
+  padding: 10px 16px;
+  font-size: 15px;
+  line-height: 1.3333333;
+  border-radius: 0;
+}
+
+/* ===== 3. ESTADOS DE VALIDAÇÃO E ERROS DINÂMICOS ===== */
+/* Suporta .has-error no grupo ou classes directas no input */
+.form-group.has-error .control-label,
+.form-group.has-error .help-block,
+.form-group.has-error .form-control-feedback {
+  color: var(--color-danger);
+}
+
+.form-group.has-error .form-control,
+.form-control.is-invalid,
+.form-control.has-error {
+  border-color: var(--color-danger) !important;
+}
+
+.form-group.has-error .form-control:focus,
+.form-control.is-invalid:focus,
+.form-control.has-error:focus {
+  border-color: var(--color-danger-hover) !important;
+  box-shadow: none;
+}
+
+/* Bloco de ajuda / mensagem de erro por baixo do campo */
+.help-block {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  color: #737373;
+  font-size: 12px;
+  min-height: 16px;
+}
+
+.form-group.has-error .help-block {
+  color: var(--color-danger);
+  font-weight: 500;
+}
+
+/* ===== 4. CAMPOS COM ÍCONES INTERNOS (HAS-FEEDBACK) ===== */
+.has-feedback {
+  position: relative;
+}
+
+.has-feedback .form-control {
+  padding-right: 40px;
+}
+
+.has-feedback .form-control-feedback {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 34px;
+  text-align: center;
+  pointer-events: none;
+  color: #777777;
+  font-size: 14px;
+}
+
+.has-feedback.input-lg .form-control-feedback {
+  height: 42px;
+  font-size: 16px;
+}
+
+/* Input Group (prefixo e sufixo de input) */
+.input-group {
+  position: relative;
+  display: flex;
+  border-collapse: separate;
+  width: 100%;
+}
+
+.input-group .form-control {
+  position: relative;
+  z-index: 2;
+  flex: 1 1 auto;
+  width: 1%;
+  margin-bottom: 0;
+}
+
+.input-group .input-group-addon {
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 1;
+  color: #555555;
+  text-align: center;
+  background-color: #eeeeee;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-base);
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.input-group .input-group-addon:first-child {
+  border-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input-group .input-group-addon:last-child {
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.input-group .form-control:not(:first-child):not(:last-child) {
+  border-radius: 0;
+}
+
+/* ===== 5. CHECKBOX PERSONALIZADO (AZUL #3C8DBC COM VISTO BRANCO) ===== */
+.custom-checkbox-container {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  font-size: 13px;
+  user-select: none;
+  color: #555555;
+  margin-bottom: 0;
+  font-weight: normal;
+}
+
+.custom-checkbox-container input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.custom-checkbox-container .checkmark {
+  position: relative;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  background-color: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  margin-right: 8px;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.custom-checkbox-container:hover input ~ .checkmark {
+  border-color: var(--color-primary);
+}
+
+.custom-checkbox-container input:checked ~ .checkmark {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary-hover);
+}
+
+.custom-checkbox-container .checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 6px;
+  top: 2px;
+  width: 4px;
+  height: 9px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.custom-checkbox-container input:checked ~ .checkmark::after {
+  display: block;
+}
+
+/* ===== 6. TABS DE NAVEGAÇÃO (PARA CONFIGURAÇÕES / SETTINGS) ===== */
+.nav-tabs {
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-tabs > li {
+  margin-bottom: -1px;
+}
+
+.nav-tabs > li > a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 2px;
+  line-height: 1.42857143;
+  border: 1px solid transparent;
+  border-top: 3px solid transparent;
+  border-radius: 0;
+  padding: 10px 15px;
+  color: #444444;
+  font-weight: 600;
+  text-decoration: none;
+  background-color: #fafafa;
+  transition: all 0.15s ease;
+}
+
+.nav-tabs > li > a:hover {
+  background-color: #f0f0f0;
+  color: #222222;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  color: #333333;
+  cursor: default;
+  background-color: #ffffff;
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-primary);
+  border-bottom-color: transparent;
+}
+
+.tab-content {
+  padding: 20px 0;
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}

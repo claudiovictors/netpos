@@ -1,0 +1,175 @@
+/* ==========================================================================
+   NETPOS - CARDS.CSS
+   Componentes "box" e "small-box" característicos do AdminLTE 2 / laravel-admin
+   Cores sólidas e planas, sem gradientes
+   ========================================================================== */
+
+/* ===== 1. COMPONENTE BOX (CARD PADRÃO) ===== */
+.box {
+  position: relative;
+  border-radius: var(--border-radius-base);
+  background: var(--color-box-bg);
+  border-top: 3px solid var(--color-border);
+  margin-bottom: 20px;
+  width: 100%;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Modificadores de cor para o topo da Box */
+.box.box-primary {
+  border-top-color: var(--color-primary);
+}
+
+.box.box-info {
+  border-top-color: var(--color-info);
+}
+
+.box.box-danger {
+  border-top-color: var(--color-danger);
+}
+
+.box.box-warning {
+  border-top-color: var(--color-warning);
+}
+
+.box.box-success {
+  border-top-color: var(--color-success);
+}
+
+.box.box-solid {
+  border-top: 0;
+}
+
+/* Cabeçalho da Box */
+.box-header {
+  color: #444444;
+  display: block;
+  padding: 10px 15px;
+  position: relative;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.box-header.with-border {
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.box-header > .box-title {
+  display: inline-block;
+  font-size: 18px;
+  margin: 0;
+  line-height: 1;
+  font-weight: 500;
+  color: #333333;
+}
+
+.box-header > .box-title > small {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  font-weight: normal;
+  padding-left: 6px;
+}
+
+/* Barra de ferramentas no cabeçalho da Box */
+.box-header > .box-tools {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Corpo da Box */
+.box-body {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: var(--border-radius-base);
+  border-bottom-left-radius: var(--border-radius-base);
+  padding: 15px;
+  position: relative;
+}
+
+.box-body.no-padding {
+  padding: 0;
+}
+
+/* Rodapé da Box */
+.box-footer {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: var(--border-radius-base);
+  border-bottom-left-radius: var(--border-radius-base);
+  border-top: 1px solid var(--color-border-light);
+  padding: 10px 15px;
+  background-color: #ffffff;
+}
+
+/* ===== 2. COMPONENTE SMALL-BOX (CARDS DE RESUMO E KPI) ===== */
+.small-box {
+  border-radius: var(--border-radius-sm);
+  position: relative;
+  display: block;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  color: #ffffff;
+}
+
+.small-box > .inner {
+  padding: 12px 15px;
+  position: relative;
+  z-index: 5;
+}
+
+.small-box h3 {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 5px 0;
+  white-space: nowrap;
+  padding: 0;
+  line-height: 1.1;
+  color: #ffffff;
+}
+
+.small-box p {
+  font-size: 14px;
+  margin: 0;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Ícone grande semi-transparente no fundo */
+.small-box .icon {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  z-index: 1;
+  font-size: 65px;
+  color: rgba(0, 0, 0, 0.15);
+  transition: all 0.3s linear;
+}
+
+.small-box:hover .icon {
+  font-size: 70px;
+}
+
+/* Rodapé com link do Small-Box */
+.small-box > .small-box-footer {
+  position: relative;
+  text-align: center;
+  padding: 4px 0;
+  color: #ffffff;
+  color: rgba(255, 255, 255, 0.85);
+  display: block;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  font-size: 12px;
+  transition: background 0.2s ease;
+}
+
+.small-box > .small-box-footer:hover {
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.18);
+  text-decoration: none;
+}

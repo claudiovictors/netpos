@@ -1,0 +1,385 @@
+/* ==========================================================================
+   NETPOS - HEADER.CSS
+   Barra de navegação superior azul sólida (#3c8dbc), hambúrguer e menu de utilizador
+   Clone visual da interface laravel-admin (AdminLTE 2)
+   ========================================================================== */
+
+/* ===== 1. HEADER PRINCIPAL (MAIN HEADER) ===== */
+.main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  background-color: var(--color-primary);
+  z-index: 1030;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Espaço do Logo no topo esquerdo do cabeçalho */
+.main-header .logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--sidebar-width);
+  height: var(--header-height);
+  background-color: var(--color-primary-hover);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: var(--header-height);
+  text-decoration: none;
+  transition: width 0.3s ease-in-out;
+  flex-shrink: 0;
+  overflow: hidden;
+  padding: 0 10px;
+}
+
+.main-header .logo:hover {
+  text-decoration: none;
+  background-color: var(--color-primary-dark);
+}
+
+.main-header .logo .logo-mini {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-header .logo .logo-lg {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+}
+
+/* Quando a sidebar está colapsada */
+.sidebar-collapse .main-header .logo {
+  width: var(--sidebar-collapsed-width);
+  padding: 0;
+}
+
+.sidebar-collapse .main-header .logo .logo-lg {
+  display: none;
+}
+
+.sidebar-collapse .main-header .logo .logo-mini {
+  display: flex;
+}
+
+.sidebar-collapse .main-header .logo .logo-mini img {
+  width: 35px;
+}
+
+.logo-lg img {
+  width: 150px;
+  object-fit: cover;
+}
+
+/* ===== 2. BARRA DE NAVEGAÇÃO SUPERIOR (NAVBAR) ===== */
+.main-header .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: calc(100% - var(--sidebar-width));
+  height: var(--header-height);
+  background-color: var(--color-primary);
+  padding: 0 15px 0 0;
+  transition: width 0.3s ease-in-out;
+}
+
+.sidebar-collapse .main-header .navbar {
+  width: calc(100% - var(--sidebar-collapsed-width));
+}
+
+/* Botão de Toggle da Sidebar (Hambúrguer) */
+.main-header .sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: var(--header-height);
+  background-color: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.main-header .sidebar-toggle:hover,
+.main-header .sidebar-toggle:focus {
+  background-color: var(--color-primary-hover);
+  color: #ffffff;
+  outline: none;
+}
+
+/* ===== 3. MENU DIREITO (CUSTOM MENU / MENSAGENS / UTILIZADOR) ===== */
+.navbar-custom-menu {
+  display: flex;
+  align-items: center;
+  height: var(--header-height);
+}
+
+.navbar-custom-menu .navbar-nav {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.navbar-custom-menu .navbar-nav > li {
+  position: relative;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+}
+
+/* Links do menu superior */
+.navbar-custom-menu .navbar-nav > li > a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+  padding: 0 15px;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 13px;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.navbar-custom-menu .navbar-nav > li > a:hover,
+.navbar-custom-menu .navbar-nav > li.open > a {
+  background-color: var(--color-primary-hover);
+}
+
+/* Ícone de mensagens no estilo laravel-admin */
+.navbar-custom-menu .messages-menu > a {
+  font-size: 16px;
+}
+
+/* Avatar de utilizador (como no screenshot) */
+.navbar-custom-menu .user-menu .user-image {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #ffffff;
+}
+
+.navbar-custom-menu .user-menu .user-avatar-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.navbar-custom-menu .user-menu .user-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* ===== 4. MENU SUSPENSO DO UTILIZADOR (USER MENU DROPDOWN) ===== */
+.navbar-custom-menu .user-menu .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: auto;
+  min-width: 240px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  border-radius: 0 0 3px 3px;
+  display: none;
+  z-index: 1000;
+  text-align: left;
+}
+
+.navbar-custom-menu .user-menu.open .dropdown-menu {
+  display: block;
+}
+
+/* Novo cabeçalho limpo sem cartão grande de avatar */
+.user-menu .dropdown-header {
+  padding: 12px 16px;
+  background-color: #fafafa;
+  border-bottom: 1px solid var(--color-border-light);
+  white-space: normal;
+}
+
+.user-menu .dropdown-header .user-display-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #333333;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.user-menu .dropdown-header .user-display-email {
+  font-size: 11px;
+  color: #777777;
+  margin: 2px 0 0 0;
+  word-break: break-all;
+}
+
+.user-menu .dropdown-header .user-display-role {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 2px;
+  background-color: #e8f0fe;
+  color: var(--color-primary);
+  margin-top: 5px;
+  text-transform: uppercase;
+}
+
+/* Lista de navegação em lista limpa */
+.user-menu .dropdown-nav {
+  list-style: none;
+  padding: 6px 0;
+  margin: 0;
+}
+
+.user-menu .dropdown-nav li {
+  margin: 0;
+  padding: 0;
+}
+
+.user-menu .dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 16px;
+  clear: both;
+  font-weight: 400;
+  color: #333333;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  box-sizing: border-box;
+}
+
+.user-menu .dropdown-item i {
+  width: 16px;
+  text-align: center;
+  font-size: 13px;
+  color: #777777;
+  transition: color 0.15s ease;
+}
+
+.user-menu .dropdown-item:hover,
+.user-menu .dropdown-item:focus {
+  background-color: #f4f4f4;
+  color: #111111;
+  text-decoration: none;
+}
+
+.user-menu .dropdown-item:hover i {
+  color: var(--color-primary);
+}
+
+/* Divisória fina */
+.user-menu .dropdown-divider {
+  height: 1px;
+  margin: 6px 0;
+  overflow: hidden;
+  background-color: var(--color-border-light);
+  border: none;
+}
+
+/* Item Terminar Sessão (Vermelho com hover discreto) */
+.user-menu .dropdown-item.text-danger {
+  color: var(--color-danger);
+}
+
+.user-menu .dropdown-item.text-danger i {
+  color: var(--color-danger);
+}
+
+.user-menu .dropdown-item.text-danger:hover {
+  background-color: #fff5f5;
+  color: #c23321;
+}
+
+.user-menu .dropdown-item.text-danger:hover i {
+  color: #c23321;
+}
+
+/* Compatibilidade com o formato clássico anterior caso ainda exista */
+.user-menu .user-header {
+  padding: 15px;
+  text-align: center;
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.user-menu .user-header img,
+.user-menu .user-header .user-avatar-lg {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  background-color: var(--color-danger);
+  color: #ffffff;
+}
+
+.user-menu .user-header p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.user-menu .user-header small {
+  display: block;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.user-menu .user-body {
+  padding: 10px 15px;
+  border-bottom: 1px solid var(--color-border-light);
+  border-top: 1px solid var(--color-border-light);
+  font-size: 13px;
+  background-color: #fafafa;
+}
+
+.user-menu .user-footer {
+  background-color: #f9f9f9;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Responsividade mobile */
+@media (max-width: 767px) {
+  .main-header .logo {
+    display: none;
+  }
+  .main-header .navbar {
+    width: 100% !important;
+  }
+}
