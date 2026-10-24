@@ -196,21 +196,28 @@ Clientes | {{ config('app.name') }} Admin
 </div>
 
 {{-- Modal Eliminar Cliente --}}
-<div class="modal" id="modal-delete-customer" role="dialog">
+<div class="modal" id="modal-delete-customer" role="dialog" aria-labelledby="modal-delete-customer-title">
     <div class="modal-dialog modal-dialog-sm">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title text-danger"><i class="fa-solid fa-triangle-exclamation"></i> Eliminar Cliente</h4>
-                <button type="button" class="close" data-modal-close>&times;</button>
+                <h4 class="modal-title text-danger" id="modal-delete-customer-title">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Eliminar Cliente
+                </h4>
+                <button type="button" class="close" data-modal-close aria-label="Fechar">&times;</button>
             </div>
             <div class="modal-body">
-                <p>Tem a certeza de que deseja eliminar o registo deste cliente?</p>
+                <p>
+                    Tem a certeza de que deseja eliminar o cliente
+                    <strong id="delete-customer-name"></strong>?
+                    Esta acção não poderá ser revertida.
+                </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-modal-close>Cancelar</button>
-                <button type="button" class="btn btn-danger"
-                    onclick="window.closeModal('modal-delete-customer'); window.showToast('success', 'Cliente eliminado com sucesso.');">
-                    <i class="fa-solid fa-trash"></i> Eliminar
+                <button type="button" class="btn btn-danger" id="btn-confirm-delete-customer"
+                        data-delete-url="" data-customer-id="">
+                    <i class="fa-solid fa-trash btn-icon"></i>
+                    <span class="btn-label">Eliminar</span>
                 </button>
             </div>
         </div>

@@ -6,7 +6,8 @@
  * - Mapeia erros 422 do servidor de volta para cada campo.
  * - Utiliza a mesma classe CSS de erro que o @error_class() do Slenix.
  * - Depende de window.showToast(type, message) definido em toast.js.
- * - Suporta paginação, filtros e alteração de "registos por página" via AJAX.
+ * - Suporta paginação, pesquisa, filtros e alteração de "registos por página" via AJAX.
+ * - Suporta eliminação individual com confirmação em modal.
  *
  * @file assets/admin/js/product.js
  */
@@ -26,13 +27,21 @@
   const SPINNER_CLASSES = "fa-solid fa-spinner fa-spin btn-icon";
 
   /**
-   * Estado actual da listagem sem o parâmetro de pesquisa.
+   * Estado actual da listagem (pesquisa + filtros + paginação).
    *
-   * @type {{ page: number, perPage: number, categoryId: string, status: string, stockLevel: string }}
+   * @type {{
+   *   page: number,
+   *   perPage: number,
+   *   search: string,
+   *   categoryId: string,
+   *   status: string,
+   *   stockLevel: string
+   * }}
    */
   const listState = {
     page: 1,
     perPage: 20,
+    search: "",
     categoryId: "",
     status: "",
     stockLevel: "",
@@ -298,7 +307,6 @@
 
     clearAllErrors(form);
 
-    // Preenche todos os campos (incluindo o input hidden com o id)
     Object.entries(product).forEach(([name, value]) => {
       const field = form.querySelector(`[name="${name}"]`);
       if (field) field.value = value ?? "";
@@ -306,7 +314,88 @@
   }
 
   /**
-   * Constrói a query string a partir do estado actual da listagem (sem o campo search).
+   * Prepara o modal de eliminação com o ID, nome e URL do produto.
+   *
+   * @param {HTMLElement} trigger Botão com data-delete-id / data-delete-url.
+   * @returns {void}
+   */
+  function prepareDeleteModal(trigger) {
+    const btn = document.getElementById("btn-confirm-delete");
+    const nameEl = document.getElementById("delete-product-name");
+
+    if (!btn) return;
+
+    btn.dataset.productId = trigger.dataset.deleteId ?? "";
+    btn.dataset.deleteUrl = trigger.dataset.deleteUrl ?? "";
+
+    if (nameEl) {
+      nameEl.textContent = trigger.dataset.deleteName ?? "este produto";
+    }
+  }
+
+  /**
+   * Envia o pedido de eliminação ao servidor e actualiza a listagem.
+   *
+   * @returns {Promise<void>}
+   */
+  async function confirmDelete() {
+    const btn = document.getElementById("btn-confirm-delete");
+    if (!btn || btn.dataset.deleting === "true") return;
+
+    const url = btn.dataset.deleteUrl;
+    if (!url) {
+      window.showToast("danger", "URL de eliminação inválida.");
+      return;
+    }
+
+    const csrfToken =
+      document.querySelector('meta[name="csrf-token"]')?.content ??
+      document.querySelector('input[name="_token"]')?.value ??
+      "";
+
+    btn.dataset.deleting = "true";
+    setLoading(btn, true);
+
+    try {
+      const body = new FormData();
+      body.append("_token", csrfToken);
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+          "X-CSRF-TOKEN": csrfToken,
+        },
+        body,
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        window.showToast(
+          "danger",
+          data.message ?? "Não foi possível eliminar o produto.",
+        );
+        return;
+      }
+
+      window.closeModal("modal-delete-confirm");
+      window.showToast(
+        "success",
+        data.message ?? "Produto eliminado com sucesso.",
+      );
+      await loadProducts();
+    } catch {
+      window.showToast("danger", "Falha de ligação ao servidor.");
+    } finally {
+      btn.dataset.deleting = "false";
+      setLoading(btn, false);
+    }
+  }
+
+  /**
+   * Constrói a query string a partir do estado actual da listagem.
    *
    * @returns {string} Query string formatada.
    */
@@ -315,6 +404,7 @@
     params.set("page", String(listState.page));
     params.set("per_page", String(listState.perPage));
 
+    if (listState.search) params.set("search", listState.search);
     if (listState.categoryId) params.set("category_id", listState.categoryId);
     if (listState.status) params.set("status", listState.status);
     if (listState.stockLevel) params.set("stock_level", listState.stockLevel);
@@ -350,7 +440,7 @@
   }
 
   /**
-   * Lê os valores atuais do formulário de filtros e atualiza o estado interno.
+   * Lê os valores actuais do formulário de filtros e actualiza o estado interno.
    *
    * @returns {void}
    */
@@ -358,6 +448,8 @@
     const form = document.getElementById("form-product-filter");
     if (!form) return;
 
+    listState.search =
+      form.querySelector('[name="search"]')?.value?.trim() ?? "";
     listState.categoryId =
       form.querySelector('[name="category_id"]')?.value ?? "";
     listState.status = form.querySelector('[name="status"]')?.value ?? "";
@@ -365,6 +457,8 @@
       form.querySelector('[name="stock_level"]')?.value ?? "";
     listState.page = 1;
   }
+
+  // --- Event listeners ---
 
   document.addEventListener("submit", (event) => {
     const form = event.target.closest(FORM_SELECTOR);
@@ -385,9 +479,18 @@
   });
 
   document.addEventListener("click", (event) => {
-    const trigger = event.target.closest("[data-edit-product]");
-    if (trigger) fillEditForm(trigger);
+    const editTrigger = event.target.closest("[data-edit-product]");
+    if (editTrigger) fillEditForm(editTrigger);
+
+    const deleteTrigger = event.target.closest("[data-delete-id]");
+    if (deleteTrigger) prepareDeleteModal(deleteTrigger);
   });
+
+  document
+    .getElementById("btn-confirm-delete")
+    ?.addEventListener("click", () => {
+      confirmDelete();
+    });
 
   document.addEventListener("click", (event) => {
     const link = event.target.closest("#pagination-links a[data-page]");
@@ -431,6 +534,7 @@
       const form = document.getElementById("form-product-filter");
       if (form) form.reset();
 
+      listState.search = "";
       listState.categoryId = "";
       listState.status = "";
       listState.stockLevel = "";

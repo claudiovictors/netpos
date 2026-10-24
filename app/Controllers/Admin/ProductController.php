@@ -12,23 +12,26 @@ use Slenix\Http\Request;
 use Slenix\Http\Response;
 
 /**
- * Controlador de gestão do catálogo de produtos (listagem, criação e actualização).
+ * Controlador de gestão do catálogo de produtos.
  *
- * A listagem suporta paginação, pesquisa e filtros via query string.
- * As operações de criação/actualização devolvem JSON para serem consumidas por AJAX.
+ * Responsável por listagem (com paginação, pesquisa e filtros),
+ * criação, actualização e eliminação de produtos.
+ * As mutações devolvem JSON para consumo via AJAX.
  */
 class ProductController
 {
     /**
      * Mostra a página de listagem de produtos.
      *
-     * Aceita os seguintes parâmetros de query:
-     * page        (int)    Página actual
-     * per_page    (int)    Registos por página (10, 20, 50, 100)
-     * search      (string) Pesquisa rápida (nome, código ou código de barras)
-     * category_id (int)    Filtro por categoria
-     * status      (string) Filtro por estado (active|inactive)
-     * stock_level (string) Filtro de stock (low|zero)
+     * Parâmetros de query suportados:
+     * - page        (int)    Página actual
+     * - per_page    (int)    Registos por página (10, 20, 50, 100)
+     * - search      (string) Pesquisa rápida (nome, código ou código de barras)
+     * - category_id (int)    Filtro por categoria
+     * - status      (string) Filtro por estado (active|inactive)
+     * - stock_level (string) Filtro de stock (low|zero)
+     *
+     * Pedidos AJAX (header X-Requested-With) devolvem apenas o partial da tabela.
      *
      * @param  Request  $req
      * @param  Response $res
@@ -48,7 +51,7 @@ class ProductController
             ->where('tenant_id', $user->tenant_id)
             ->orderBy('id', 'desc');
 
-        // Pesquisa rápida
+        // Pesquisa rápida (nome, código interno ou código de barras)
         if ($search = trim((string) $req->query('search', ''))) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
@@ -80,7 +83,6 @@ class ProductController
 
         $products = $query->paginate($perPage);
 
-        // Pedido AJAX → devolve apenas o HTML parcial da tabela + paginação
         if ($req->getHeader('X-Requested-With') === 'XMLHttpRequest') {
             return view('partials.products-table', [
                 'products' => $products,
@@ -96,8 +98,8 @@ class ProductController
     /**
      * Cria um novo produto.
      *
-     * A validação é feita pelo ProductRequest. Em caso de falha o framework
-     * deve responder com HTTP 422 e o formato:
+     * A validação é feita pelo ProductRequest. Em falha o framework
+     * responde com HTTP 422 e o formato:
      * {"message": "...", "errors": {"campo": ["mensagem"]}}.
      *
      * @param  ProductRequest $req
@@ -120,13 +122,12 @@ class ProductController
      *
      * @param  EditProductRequest $req
      * @param  Response           $res
-     * @param  int                $id ID do produto extraído da rota.
      * @return mixed Resposta JSON (404 se o produto não existir).
      */
     public function update(EditProductRequest $req, Response $res)
     {
         $data    = $req->validated();
-        $product = Product::find((int) ($data['id'] ?? 0));
+        $product = $this->findOwnedProduct((int) ($data['id'] ?? 0));
 
         if (!$product) {
             return $res->json([
@@ -144,17 +145,19 @@ class ProductController
     }
 
     /**
-     * Actualiza um produto existente.
+     * Elimina um produto existente.
      *
-     * @param  EditProductRequest $req
-     * @param  Response           $res
-     * @param  int                $id ID do produto extraído da rota.
-     * @return mixed Resposta JSON (404 se o produto não existir).
+     * O ID é extraído dos parâmetros de rota ($param['id']).
+     * Só apaga produtos do tenant do utilizador autenticado.
+     *
+     * @param  Request  $req
+     * @param  Response $res
+     * @param  array    $param Parâmetros de rota (ex.: ['id' => '12']).
+     * @return mixed Resposta JSON (404 se não existir / não pertencer ao tenant).
      */
-    public function delete(EditProductRequest $req, Response $res, array $param)
+    public function delete(Request $req, Response $res, array $param)
     {
-        $id = (int) $param['id'];
-        $product = Product::find(($id ?? 0));
+        $product = $this->findOwnedProduct((int) ($param['id'] ?? 0));
 
         if (!$product) {
             return $res->json([
@@ -167,8 +170,30 @@ class ProductController
 
         return $res->json([
             'success' => true,
-            'message' => 'Produto deletado com sucesso.',
+            'message' => 'Produto eliminado com sucesso.',
         ]);
+    }
+
+    /**
+     * Localiza um produto pelo ID restringindo ao tenant do utilizador actual.
+     *
+     * @param  int $id
+     * @return Product|null
+     */
+    private function findOwnedProduct(int $id): ?Product
+    {
+        if ($id <= 0) {
+            return null;
+        }
+
+        $user = auth()->user();
+        if (!$user) {
+            return null;
+        }
+
+        return Product::where('id', $id)
+            ->where('tenant_id', $user->tenant_id)
+            ->first();
     }
 
     /**

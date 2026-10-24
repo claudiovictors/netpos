@@ -43,8 +43,13 @@
                                     data-edit-employee="{{ json_encode($employee) }}">
                                 <i class="fa-regular fa-pen-to-square"></i>
                             </button>
-                            <button type="button" class="action-btn action-delete" title="Eliminar"
-                                    data-modal-open="modal-delete-employee">
+                            <button type="button"
+                                    class="action-btn action-delete"
+                                    title="Eliminar"
+                                    data-modal-open="modal-delete-employee"
+                                    data-delete-id="{{ $employee->id }}"
+                                    data-delete-name="{{ $employee->name }}"
+                                    data-delete-url="{{ route('employees.delete', ['id' => $employee->id]) }}">
                                 <i class="fa-regular fa-trash-can"></i>
                             </button>
                         </td>

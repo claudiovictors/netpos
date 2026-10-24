@@ -13,11 +13,17 @@ use App\Http\Requests\EditCustomerRequest;
 
 /**
  * Controlador de gestão da base de dados de clientes.
+ *
+ * Listagem com paginação e pesquisa; criação, actualização e
+ * eliminação via JSON para consumo AJAX.
  */
 class CustomersController
 {
     /**
      * Mostra a página de listagem de clientes (com paginação e pesquisa).
+     *
+     * Query: page, per_page (10|20|50|100), search (nome, NIF, telefone, email).
+     * Pedidos AJAX devolvem apenas o partial da tabela.
      *
      * @param  Request  $req
      * @param  Response $res
@@ -36,7 +42,6 @@ class CustomersController
         $query = Customer::where('tenant_id', $user->tenant_id)
             ->orderBy('id', 'desc');
 
-        // Pesquisa rápida por nome, NIF, telefone ou email
         if ($search = trim((string) $req->query('search', ''))) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
@@ -48,7 +53,6 @@ class CustomersController
 
         $customers = $query->paginate($perPage);
 
-        // Pedido AJAX → devolve apenas o HTML parcial da tabela + paginação
         if ($req->getHeader('X-Requested-With') === 'XMLHttpRequest') {
             return view('partials.customers-table', [
                 'customers' => $customers,
@@ -79,16 +83,16 @@ class CustomersController
     }
 
     /**
-     * Actualiza um cliente existente.
+     * Actualiza um cliente existente (apenas do tenant actual).
      *
      * @param  EditCustomerRequest $req
      * @param  Response            $res
-     * @return mixed Resposta JSON (404 se o cliente não existir).
+     * @return mixed Resposta JSON (404 se não existir).
      */
     public function update(EditCustomerRequest $req, Response $res)
     {
         $data     = $req->validated();
-        $customer = Customer::find((int) ($data['id'] ?? 0));
+        $customer = $this->findOwnedCustomer((int) ($data['id'] ?? 0));
 
         if (!$customer) {
             return $res->json([
@@ -103,6 +107,55 @@ class CustomersController
             'success' => true,
             'message' => 'Cliente actualizado com sucesso.',
         ]);
+    }
+
+    /**
+     * Elimina um cliente existente (apenas do tenant actual).
+     *
+     * @param  Request  $req
+     * @param  Response $res
+     * @param  array    $param Parâmetros de rota (ex.: ['id' => '12']).
+     * @return mixed Resposta JSON (404 se não existir).
+     */
+    public function delete(Request $req, Response $res, array $param)
+    {
+        $customer = $this->findOwnedCustomer((int) ($param['id'] ?? 0));
+
+        if (!$customer) {
+            return $res->json([
+                'success' => false,
+                'message' => 'Cliente não encontrado.',
+            ], 404);
+        }
+
+        $customer->delete();
+
+        return $res->json([
+            'success' => true,
+            'message' => 'Cliente eliminado com sucesso.',
+        ]);
+    }
+
+    /**
+     * Localiza um cliente pelo ID restringindo ao tenant do utilizador actual.
+     *
+     * @param  int $id
+     * @return Customer|null
+     */
+    private function findOwnedCustomer(int $id): ?Customer
+    {
+        if ($id <= 0) {
+            return null;
+        }
+
+        $user = auth()->user();
+        if (!$user) {
+            return null;
+        }
+
+        return Customer::where('id', $id)
+            ->where('tenant_id', $user->tenant_id)
+            ->first();
     }
 
     /**

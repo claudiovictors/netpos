@@ -226,21 +226,28 @@ Funcionários | {{ config('app.name') }} Admin
 </div>
 
 {{-- Modal Eliminar Funcionário --}}
-<div class="modal" id="modal-delete-employee" role="dialog">
+<div class="modal" id="modal-delete-employee" role="dialog" aria-labelledby="modal-delete-employee-title">
     <div class="modal-dialog modal-dialog-sm">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title text-danger"><i class="fa-solid fa-triangle-exclamation"></i> Eliminar Funcionário</h4>
-                <button type="button" class="close" data-modal-close>&times;</button>
+                <h4 class="modal-title text-danger" id="modal-delete-employee-title">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Eliminar Funcionário
+                </h4>
+                <button type="button" class="close" data-modal-close aria-label="Fechar">&times;</button>
             </div>
             <div class="modal-body">
-                <p>Tem a certeza de que deseja eliminar este funcionário?</p>
+                <p>
+                    Tem a certeza de que deseja eliminar o funcionário
+                    <strong id="delete-employee-name"></strong>?
+                    Esta acção não poderá ser revertida.
+                </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-modal-close>Cancelar</button>
-                <button type="button" class="btn btn-danger"
-                    onclick="window.closeModal('modal-delete-employee'); window.showToast('success', 'Funcionário eliminado com sucesso.');">
-                    <i class="fa-solid fa-trash"></i> Eliminar
+                <button type="button" class="btn btn-danger" id="btn-confirm-delete-employee"
+                        data-delete-url="" data-employee-id="">
+                    <i class="fa-solid fa-trash btn-icon"></i>
+                    <span class="btn-label">Eliminar</span>
                 </button>
             </div>
         </div>

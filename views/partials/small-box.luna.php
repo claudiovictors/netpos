@@ -74,7 +74,7 @@
             <div class="icon">
                 <i class="fa-solid fa-triangle-exclamation"></i>
             </div>
-            <a href="{{ route('product') }}" class="small-box-footer">
+            <a href="{{ route('product') }}?stock_level=low" class="small-box-footer">
                 Verificar stock <i class="fa-solid fa-circle-arrow-right"></i>
             </a>
         </div>
