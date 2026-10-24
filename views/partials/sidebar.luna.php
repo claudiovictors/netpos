@@ -50,6 +50,15 @@
                 </a>
             </li>
 
+            <div class="sidebar-heading">VENDAS FUNCIONÁRIOS</div>
+            <!-- Item: Funcionários -->
+            <li class="{{ is_active('/pos') }}">
+                <a href="{{ route('pos') }}">
+                    <i class="fa-solid fa-cash-register nav-icon"></i>
+                    <span class="nav-text">Ponto de Venda</span>
+                </a>
+            </li>
+
             <!-- Cabeçalho de Secção -->
             <div class="sidebar-heading">RELATÓRIOS E DEFINIÇÕES</div>
 

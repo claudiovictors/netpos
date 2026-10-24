@@ -223,10 +223,12 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-modal-close>Cancelar</button>
-                    <button type="button" class="btn btn-danger"
-                            onclick="window.closeModal('modal-delete-confirm'); window.showToast('success', 'Produto eliminado com sucesso.');">
-                        <i class="fa-solid fa-trash"></i> Eliminar
-                    </button>
+                    <form action="{{ route('products.delete', ['id' => 5]) }}" method="post">
+                        @csrf
+                        <button type="button" class="btn btn-danger" onclick="window.closeModal('modal-delete-confirm'); window.showToast('success', 'Produto eliminado com sucesso.');">
+                            <i class="fa-solid fa-trash"></i> Eliminar
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controllers\Admin;
 
-use App\Http\Requests\CustomerRequest;
-use App\Http\Requests\EditCustomerRequest;
 use App\Models\Customer;
 use Slenix\Http\Request;
 use Slenix\Http\Response;
+use Slenix\Supports\Libraries\Str;
+use App\Http\Requests\CustomerRequest;
+use App\Http\Requests\EditCustomerRequest;
 
 /**
  * Controlador de gestão da base de dados de clientes.
@@ -26,7 +27,7 @@ class CustomersController
     {
         $user = auth()->user();
         if (!$user) {
-            return $res->redirect('/login');
+            return $res->redirect(route('login'));
         }
 
         $perPage = (int) $req->query('per_page', 20);
@@ -113,14 +114,14 @@ class CustomersController
     private function normalize(array $in): array
     {
         $user    = auth()->user();
-        $email   = trim((string) ($in['email'] ?? ''));
-        $phone   = trim((string) ($in['phone'] ?? ''));
-        $nif     = trim((string) ($in['nif'] ?? ''));
-        $address = trim((string) ($in['address'] ?? ''));
+        $email   = Str::escape((string) ($in['email'] ?? ''));
+        $phone   = Str::escape((string) ($in['phone'] ?? ''));
+        $nif     = Str::escape((string) ($in['nif'] ?? ''));
+        $address = Str::escape((string) ($in['address'] ?? ''));
 
         return [
             'tenant_id' => $user ? (int) $user->tenant_id : 0,
-            'name'      => trim((string) ($in['name'] ?? '')),
+            'name'      => Str::escape((string) ($in['name'] ?? '')),
             'email'     => $email !== '' ? $email : null,
             'phone'     => $phone !== '' ? $phone : null,
             'nif'       => $nif !== '' ? $nif : null,

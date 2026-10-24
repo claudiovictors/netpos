@@ -61,8 +61,7 @@
                                     data-edit-product="{{ json_encode($product) }}">
                                 <i class="fa-regular fa-pen-to-square"></i>
                             </button>
-                            <button type="button" class="action-btn action-delete" title="Eliminar"
-                                    data-modal-open="modal-delete-confirm">
+                            <button type="button" class="action-btn action-delete" title="Eliminar" data-modal-open="modal-delete-confirm">
                                 <i class="fa-regular fa-trash-can"></i>
                             </button>
                         </td>

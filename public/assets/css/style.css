@@ -1,0 +1,1986 @@
+/* ==========================================================================
+   NETPOS - CSS/POS/BASE.CSS
+   Variáveis de cor, reset CSS, tipografia e utilitários base do POS
+   Cores sólidas e planas inspiradas no AdminLTE 2 (sem gradientes)
+   ========================================================================== */
+
+/* ===== 1. VARIÁVEIS GLOBAIS DO ECRÃ DE VENDAS ===== */
+:root {
+  /* Paleta NetPos / AdminLTE 2 (Cores Planas e Sólidas) */
+  --pos-primary: #3c8dbc;          /* Azul NetPos clássico */
+  --pos-primary-hover: #2f7aa6;    /* Azul escuro no hover */
+  --pos-bars-bg: #2f7aa6;          /* Cor das barras superior e inferior (como nas referências) */
+  --pos-bars-text: #ffffff;        /* Texto das barras */
+  
+  --pos-success: #00a65a;          /* Verde para "Fechar conta" e sucesso */
+  --pos-success-hover: #008d4c;
+  --pos-info: #00c0ef;             /* Azul ciano para info */
+  --pos-info-hover: #009abf;
+  --pos-light-blue: #55acee;       /* Azul claro */
+  --pos-warning: #f39c12;          /* Laranja para "Gravar temporário" e avisos */
+  --pos-warning-hover: #e08e0b;
+  --pos-danger: #dd4b39;           /* Vermelho para "Eliminar" e erros */
+  --pos-danger-hover: #c23321;
+  --pos-navy: #222d32;             /* Azul escuro grafite */
+  
+  /* Estrutura, fundos e texto */
+  --pos-bg-body: #ecf0f5;          /* Cinza claro de fundo clássico AdminLTE */
+  --pos-bg-panel: #ffffff;         /* Fundo de painéis e tabelas */
+  --pos-border: #d2d6de;           /* Borda cinza padrão */
+  --pos-border-subtle: #e5e5e5;
+  --pos-text-main: #333333;        /* Cor do texto principal */
+  --pos-text-muted: #777777;       /* Cor de textos secundários */
+  --pos-text-light: #999999;
+  
+  /* Destaques de linha */
+  --pos-row-selected: #d9edf7;      /* Azul claro da linha seleccionada */
+  --pos-row-selected-text: #31708f;
+  --pos-row-stripe: #fafafa;        /* Linhas alternadas muito subtis */
+  
+  /* Tipografia */
+  --pos-font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  
+  /* Dimensões estruturais */
+  --pos-topbar-height: 46px;
+  --pos-statusbar-height: 38px;
+  --pos-touch-min-size: 48px;       /* Alvo táctil mínimo para POS */
+}
+
+/* ===== 2. RESET E BOX-SIZING UNIVERSAL ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* O ecrã do POS nunca tem scroll na página */
+  background-color: var(--pos-bg-body);
+  color: var(--pos-text-main);
+  font-family: var(--pos-font-family);
+  font-size: 14px;
+  line-height: 1.42857143;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: none; /* Previne selecção acidental de texto em ecrãs tácteis */
+}
+
+/* Permitir selecção em campos de introdução */
+input,
+textarea,
+[contenteditable="true"] {
+  user-select: text;
+}
+
+/* ===== 3. AVATARES CIRCULARES COM INICIAIS ===== */
+.pos-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--pos-primary);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.pos-avatar.pos-avatar-seller {
+  background-color: var(--pos-navy);
+}
+
+.pos-avatar.pos-avatar-client {
+  background-color: var(--pos-info);
+}
+
+.pos-avatar.pos-avatar-user {
+  background-color: #ffffff;
+  color: var(--pos-bars-bg);
+  border: none;
+}
+
+/* ===== 4. BOTÕES BASE COM ALVO TÁCTIL MÍNIMO ===== */
+.pos-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--pos-touch-min-size);
+  padding: 8px 14px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  white-space: nowrap;
+  outline: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+}
+
+.pos-btn:focus-visible {
+  outline: 2px solid var(--pos-primary);
+  outline-offset: 1px;
+}
+
+.pos-btn:disabled,
+.pos-btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Variantes de botões com cores sólidas */
+.pos-btn-primary {
+  background-color: var(--pos-primary);
+  border-color: var(--pos-primary);
+  color: #ffffff;
+}
+.pos-btn-primary:hover {
+  background-color: var(--pos-primary-hover);
+  border-color: var(--pos-primary-hover);
+}
+
+.pos-btn-success {
+  background-color: var(--pos-success);
+  border-color: var(--pos-success);
+  color: #ffffff;
+}
+.pos-btn-success:hover {
+  background-color: var(--pos-success-hover);
+  border-color: var(--pos-success-hover);
+}
+
+.pos-btn-warning {
+  background-color: var(--pos-warning);
+  border-color: var(--pos-warning);
+  color: #ffffff;
+}
+.pos-btn-warning:hover {
+  background-color: var(--pos-warning-hover);
+  border-color: var(--pos-warning-hover);
+}
+
+.pos-btn-danger {
+  background-color: var(--pos-danger);
+  border-color: var(--pos-danger);
+  color: #ffffff;
+}
+.pos-btn-danger:hover {
+  background-color: var(--pos-danger-hover);
+  border-color: var(--pos-danger-hover);
+}
+
+.pos-btn-default {
+  background-color: #ffffff;
+  border-color: var(--pos-border);
+  color: var(--pos-text-main);
+}
+.pos-btn-default:hover {
+  background-color: #f7f7f7;
+  border-color: #c0c4cb;
+}
+/* ==========================================================================
+   NETPOS - CSS/POS/LAYOUT.CSS
+   Grelha principal do ecrã de vendas POS (100vw x 100vh)
+   Sem scroll de página. Apenas a tabela de produtos tem scroll interno.
+   Optimizado para 1024x768, 1366x768 e 1920x1080.
+   ========================================================================== */
+
+/* ===== 1. CONTENTOR RAIZ DO ECRÃ POS (CSS GRID) ===== */
+.pos-screen {
+  display: grid;
+  grid-template-rows: var(--pos-topbar-height) 1fr var(--pos-statusbar-height);
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
+  background-color: var(--pos-bg-body);
+}
+
+/* ===== 2. CORPO PRINCIPAL DE TRABALHO (.pos-main) ===== */
+.pos-main {
+  display: grid;
+  grid-template-columns: 1fr 280px; /* Esquerda: Venda / Direita: Tiles */
+  gap: 10px;
+  padding: 10px;
+  height: 100%;
+  min-height: 0; /* Essencial para permitir que o flex/grid filho faça scroll */
+  overflow: hidden;
+}
+
+/* ===== 3. ZONA ESQUERDA: VENDA, RESUMO E TABELA ===== */
+.pos-sales-workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Bloco superior com logo e TOTAL gigante */
+.pos-summary-block {
+  flex-shrink: 0;
+  background-color: var(--pos-bg-panel);
+  border: 1px solid var(--pos-border);
+  border-radius: 3px;
+  padding: 8px 14px;
+}
+
+/* Faixa de metadados: Documento, Vendedor, Cliente, Desconto, IVA */
+.pos-info-strip {
+  flex-shrink: 0;
+  background-color: #ffffff;
+  border: 1px solid var(--pos-border);
+  border-radius: 3px;
+  padding: 6px 12px;
+}
+
+/* Contentor da Tabela de Linhas com scroll interno */
+.pos-cart-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--pos-bg-panel);
+  border: 1px solid var(--pos-border);
+  border-radius: 3px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ===== 4. ZONA DIREITA: PAINEL DE ACÇÕES / TILES ===== */
+.pos-actions-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Vistas alternáveis da coluna direita */
+.pos-view-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.pos-view-container.is-hidden {
+  display: none !important;
+}
+
+/* ===== 5. RESPONSIVIDADE PARA ECRÃS PEQUENOS (< 900px) ===== */
+@media screen and (max-width: 900px) {
+  .pos-main {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 6px;
+    padding: 6px;
+  }
+
+  .pos-actions-panel {
+    height: 150px;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .pos-tiles-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    gap: 6px !important;
+    padding-bottom: 4px;
+  }
+
+  .pos-tile-btn {
+    min-width: 130px !important;
+    height: 100% !important;
+    flex-shrink: 0 !important;
+  }
+}
+/* ==========================================================================
+   NETPOS - CSS/POS/TOPBAR.CSS
+   Barra superior azul escura (#2f7aa6) com hambúrguer, título e botão fechar
+   Cores sólidas e planas (estilo AdminLTE 2 / POS táctil)
+   ========================================================================== */
+
+/* ===== 1. ESTRUTURA DA BARRA SUPERIOR ===== */
+.pos-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--pos-topbar-height);
+  background-color: var(--pos-bars-bg);
+  color: var(--pos-bars-text);
+  padding: 0 8px;
+  position: relative;
+  z-index: 100;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ===== 2. LADO ESQUERDO: BOTÃO HAMBÚRGUER ===== */
+.pos-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pos-topbar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  border-radius: 3px;
+  color: #ffffff;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.pos-topbar-toggle:hover,
+.pos-topbar-toggle:focus {
+  background-color: rgba(255, 255, 255, 0.15);
+  outline: none;
+}
+
+.pos-topbar-toggle:active {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+/* ===== 3. CENTRO: IDENTIFICAÇÃO DO SISTEMA ===== */
+.pos-topbar-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none; /* Não bloqueia cliques */
+}
+
+.pos-topbar-logo-icon {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pos-topbar-logo-icon img,
+.pos-topbar-logo-icon svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.pos-topbar-title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0;
+}
+
+.pos-topbar-badge {
+  font-size: 11px;
+  font-weight: 600;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 2px 6px;
+  border-radius: 2px;
+  letter-spacing: 0.2px;
+}
+
+/* ===== 4. LADO DIREITO: BOTÃO DE SAÍDA ("X" PARA O BACKOFFICE) ===== */
+.pos-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pos-topbar-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  border-radius: 3px;
+  color: #ffffff;
+  font-size: 18px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.pos-topbar-close:hover,
+.pos-topbar-close:focus {
+  background-color: var(--pos-danger);
+  color: #ffffff;
+  outline: none;
+}
+/* ==========================================================================
+   NETPOS - CSS/POS/SUMMARY.CSS
+   Resumo superior (Logo NetPos à esquerda, TOTAL gigante à direita)
+   e faixa de informação de metadados da venda
+   ========================================================================== */
+
+/* ===== 1. BLOCO PRINCIPAL DO RESUMO ===== */
+.pos-summary-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--pos-bg-panel);
+  border: 1px solid var(--pos-border);
+  border-radius: 3px;
+  padding: 10px 16px;
+  min-height: 100px;
+}
+
+/* Lado Esquerdo: Logótipo NetPos */
+.pos-summary-logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pos-summary-logo img,
+.pos-summary-logo svg {
+  width: 170px;
+  height: auto;
+  max-height: 48px;
+  display: block;
+}
+
+.pos-summary-tagline {
+  font-size: 11px;
+  color: var(--pos-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+/* Lado Direito: TOTAL Gigante (88px a 110px) */
+.pos-summary-total-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  text-align: right;
+}
+
+.pos-summary-total-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--pos-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: -5px;
+}
+
+.pos-summary-total-amount {
+  font-size: 96px; /* Tamanho gigante conforme requisito de 88px a 110px */
+  font-weight: 800;
+  line-height: 0.95;
+  color: var(--pos-navy);
+  letter-spacing: -2px;
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.pos-summary-currency {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--pos-primary);
+  margin-left: 2px;
+}
+
+/* ===== 2. FAIXA DE INFORMAÇÃO (DOCUMENTO, VENDEDOR, CLIENTE, SALDO/IVA) ===== */
+.pos-info-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  background-color: #ffffff;
+  border: 1px solid var(--pos-border);
+  border-radius: 3px;
+  padding: 8px 14px;
+  align-items: center;
+}
+
+.pos-info-item {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pos-info-item-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--pos-text-muted);
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.pos-info-item-value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--pos-text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pos-info-doc-badge {
+  color: var(--pos-primary);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+/* Cliente clicável para abrir modal */
+.pos-info-item-clickable {
+  cursor: pointer;
+  padding: 2px 6px;
+  margin: -2px -6px;
+  border-radius: 3px;
+  transition: background-color 0.15s ease;
+}
+
+.pos-info-item-clickable:hover {
+  background-color: var(--pos-row-selected);
+}
+
+.pos-info-subtext {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--pos-text-muted);
+  margin-left: 2px;
+}
+
+/* Responsividade do bloco de resumo */
+@media screen and (max-width: 1200px) {
+  .pos-summary-total-amount {
+    font-size: 80px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .pos-summary-total-amount {
+    font-size: 64px;
+  }
+  .pos-info-strip {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+/* ==========================================================================
+   NETPOS - CSS/POS/CART.CSS
+   Tabela de linhas de venda, linha de introdução rápida com leitor
+   de código de barras e rodapé de totais da fatura
+   ========================================================================== */
+
+/* ===== 1. ESTRUTURA DA TABELA DE PRODUTOS ===== */
+.pos-cart-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: #ffffff;
+  border: 1px solid var(--pos-border);
+  border-radius: 3px;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.pos-cart-table-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.pos-cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 13px;
+}
+
+/* Cabeçalho Fixo Azul NetPos (#3c8dbc) */
+.pos-cart-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--pos-primary);
+  color: #ffffff;
+}
+
+.pos-cart-table thead th {
+  padding: 8px 10px;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  text-align: left;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+}
+
+.pos-cart-table th.col-ref   { width: 14%; }
+.pos-cart-table th.col-desc  { width: 34%; }
+.pos-cart-table th.col-qty   { width: 10%; text-align: right; }
+.pos-cart-table th.col-price { width: 13%; text-align: right; }
+.pos-cart-table th.col-desc-pct { width: 9%; text-align: right; }
+.pos-cart-table th.col-tax   { width: 9%; text-align: center; }
+.pos-cart-table th.col-total { width: 11%; text-align: right; }
+
+/* Linhas do Carrinho */
+.pos-cart-table tbody tr {
+  border-bottom: 1px solid var(--pos-border-subtle);
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.pos-cart-table tbody tr:nth-child(even) {
+  background-color: var(--pos-row-stripe);
+}
+
+.pos-cart-table tbody tr:hover {
+  background-color: #f0f7fb;
+}
+
+/* Linha Seleccionada (#d9edf7) */
+.pos-cart-table tbody tr.is-selected {
+  background-color: var(--pos-row-selected) !important;
+  color: var(--pos-row-selected-text);
+  font-weight: 600;
+}
+
+.pos-cart-table tbody td {
+  padding: 9px 10px;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pos-cart-table td.text-right { text-align: right; }
+.pos-cart-table td.text-center { text-align: center; }
+
+/* Badge de Imposto */
+.pos-tax-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 2px;
+  background-color: #e8f4f8;
+  color: var(--pos-primary);
+}
+
+.pos-tax-badge.is-exempt {
+  background-color: #fcf8e3;
+  color: #8a6d3b;
+}
+
+/* Mensagem de Carrinho Vazio */
+.pos-cart-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--pos-text-muted);
+}
+
+.pos-cart-empty i {
+  font-size: 40px;
+  color: #c0c4cb;
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* ===== 2. ÚLTIMA LINHA: INTRODUÇÃO RÁPIDA DE ARTIGO ===== */
+.pos-cart-entry-row {
+  background-color: #ffffff !important;
+  border-top: 2px solid var(--pos-primary);
+  border-bottom: none !important;
+}
+
+.pos-cart-entry-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background-color: #f7f9fa;
+  border-top: 1px solid var(--pos-border);
+}
+
+.pos-cart-input-wrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.pos-cart-barcode-icon {
+  position: absolute;
+  left: 10px;
+  color: var(--pos-text-muted);
+  font-size: 15px;
+  pointer-events: none;
+}
+
+.pos-cart-input {
+  width: 100%;
+  height: 38px;
+  padding: 6px 10px 6px 36px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pos-text-main);
+  background-color: #ffffff;
+  border: 1px solid var(--pos-primary);
+  border-radius: 3px;
+  outline: none;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.pos-cart-input:focus {
+  border-color: var(--pos-primary-hover);
+  box-shadow: 0 0 0 2px rgba(60, 141, 188, 0.25);
+}
+
+.pos-cart-input::placeholder {
+  color: #999999;
+  font-weight: 400;
+  font-size: 13px;
+}
+
+/* Botão de Pesquisa (Lupa azul) */
+.pos-btn-search-trigger {
+  width: 44px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--pos-primary);
+  border: 1px solid var(--pos-primary);
+  border-radius: 3px;
+  color: #ffffff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.pos-btn-search-trigger:hover {
+  background-color: var(--pos-primary-hover);
+}
+
+/* ===== 3. RODAPÉ DE TOTAIS DA FATURA ===== */
+.pos-cart-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f4f6f9;
+  border-top: 1px solid var(--pos-border);
+  padding: 8px 14px;
+  flex-shrink: 0;
+  font-size: 13px;
+}
+
+.pos-cart-totals-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.pos-cart-total-item {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.pos-cart-total-item-label {
+  color: var(--pos-text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.pos-cart-total-item-value {
+  font-weight: 700;
+  color: var(--pos-text-main);
+  font-size: 13px;
+}
+
+.pos-cart-total-item.highlight .pos-cart-total-item-value {
+  color: var(--pos-primary);
+  font-size: 15px;
+  font-weight: 800;
+}
+/* ==========================================================================
+   NETPOS - CSS/POS/ACTIONS.CSS
+   Painel direito de ações com duas vistas alternadas sem recarregar:
+   - Vista A: Grelha táctil de tiles (2 colunas, ícone em cima e texto em baixo)
+   - Vista B: Lista vertical de botões largos ("Outras Opções", como na imagem 1)
+   ========================================================================== */
+
+/* ===== 1. PAINEL CONTENTOR DE ACÇÕES ===== */
+.pos-actions-panel {
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ===== 2. VISTA A: GRELHA DE TILES (2 COLUNAS) ===== */
+.pos-tiles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+/* Botão individual Tile táctil */
+.pos-tile-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 64px;
+  padding: 8px 6px;
+  background-color: var(--pos-primary);
+  color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  transition: background-color 0.15s ease, transform 0.05s ease;
+  user-select: none;
+}
+
+.pos-tile-btn i {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.pos-tile-btn:hover {
+  background-color: var(--pos-primary-hover);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.pos-tile-btn:active {
+  transform: translateY(1px);
+}
+
+/* Exceções semânticas de cores nos tiles (conforme especificação) */
+.pos-tile-btn.tile-checkout {
+  background-color: var(--pos-success);
+}
+.pos-tile-btn.tile-checkout:hover {
+  background-color: var(--pos-success-hover);
+}
+
+.pos-tile-btn.tile-danger,
+.pos-tile-btn.tile-delete-line {
+  background-color: var(--pos-danger);
+}
+.pos-tile-btn.tile-danger:hover,
+.pos-tile-btn.tile-delete-line:hover {
+  background-color: var(--pos-danger-hover);
+}
+
+.pos-tile-btn.tile-park,
+.pos-tile-btn.tile-warning {
+  background-color: var(--pos-warning);
+}
+.pos-tile-btn.tile-park:hover,
+.pos-tile-btn.tile-warning:hover {
+  background-color: var(--pos-warning-hover);
+}
+
+/* ===== 3. VISTA B: LISTA VERTICAL "OUTRAS OPÇÕES" ===== */
+.pos-more-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+/* Botão individual largo da Vista B */
+.pos-list-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 52px;
+  padding: 10px 14px;
+  background-color: var(--pos-primary);
+  color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  transition: background-color 0.15s ease, transform 0.05s ease;
+  user-select: none;
+}
+
+.pos-list-btn i {
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.pos-list-btn:hover {
+  background-color: var(--pos-primary-hover);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.pos-list-btn:active {
+  transform: translateY(1px);
+}
+
+/* Botão "Voltar" no topo da Vista B */
+.pos-list-btn.btn-back-to-tiles {
+  background-color: var(--pos-navy);
+  border-color: var(--pos-navy);
+  margin-bottom: 4px;
+}
+
+.pos-list-btn.btn-back-to-tiles:hover {
+  background-color: #1a2226;
+}
+
+/* Botão "Eliminar Documento" (Vermelho) */
+.pos-list-btn.btn-discard-doc {
+  background-color: var(--pos-danger);
+}
+
+.pos-list-btn.btn-discard-doc:hover {
+  background-color: var(--pos-danger-hover);
+}
+/* ==========================================================================
+   NETPOS - CSS/POS/STATUSBAR.CSS
+   Barra inferior azul escura (#2f7aa6) com preços com imposto, data/hora ao vivo,
+   n.º de itens, posto, utilizador e ícones de estado de periféricos e AGT
+   ========================================================================== */
+
+/* ===== 1. ESTRUTURA DA BARRA INFERIOR ===== */
+.pos-statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--pos-statusbar-height);
+  background-color: var(--pos-bars-bg);
+  color: var(--pos-bars-text);
+  padding: 0 14px;
+  font-size: 12px;
+  z-index: 100;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+/* ===== 2. LADO ESQUERDO: AVISO FISCAL E RELÓGIO AO VIVO ===== */
+.pos-statusbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pos-statusbar-tax-notice {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.pos-statusbar-clock {
+  color: rgba(255, 255, 255, 0.85);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ===== 3. CENTRO: ITENS, POSTO, TURNO E UTILIZADOR ===== */
+.pos-statusbar-center {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pos-statusbar-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pos-statusbar-item strong {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.pos-statusbar-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(0, 0, 0, 0.15);
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* ===== 4. LADO DIREITO: ÍCONES DE PERIFÉRICOS E ESTADO AGT ===== */
+.pos-statusbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pos-hardware-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pos-hardware-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 3px;
+  transition: background-color 0.15s ease;
+  position: relative;
+}
+
+.pos-hardware-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Chip de Estado da Ligação AGT (Fiscal de Angola) */
+.pos-agt-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: background-color 0.2s ease;
+  user-select: none;
+}
+
+/* Estados da AGT: Ligado (Verde), Pendente (Laranja), Offline (Vermelho) */
+.pos-agt-badge.status-connected {
+  background-color: var(--pos-success);
+  color: #ffffff;
+}
+
+.pos-agt-badge.status-pending {
+  background-color: var(--pos-warning);
+  color: #ffffff;
+}
+
+.pos-agt-badge.status-offline {
+  background-color: var(--pos-danger);
+  color: #ffffff;
+}
+
+.pos-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  display: inline-block;
+}
+
+/* Responsividade da status bar */
+@media screen and (max-width: 900px) {
+  .pos-statusbar-tax-notice,
+  .pos-statusbar-center .pos-statusbar-item:not(.pos-statusbar-user) {
+    display: none;
+  }
+}
+/* ==========================================================================
+   NETPOS - CSS/POS/MODALS.CSS
+   Estilos base para janelas modais tácteis do POS
+   Barra de título azul escura (#2f7aa6), grupos com moldura e título
+   (como na Imagem 2 de referência), e estados de erro de validação
+   ========================================================================== */
+
+/* ===== 1. BACKDROP ESCURECIDO ===== */
+.pos-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.55);
+  z-index: 1050;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.pos-modal-backdrop.is-open {
+  display: flex !important;
+}
+
+/* ===== 2. JANELA MODAL DIALOG (.pos-modal) ===== */
+.pos-modal {
+  display: none;
+  flex-direction: column;
+  background-color: #ffffff;
+  border: 1px solid var(--pos-border);
+  border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 650px;
+  max-height: calc(100vh - 40px);
+  overflow: hidden;
+  position: relative;
+  outline: none;
+}
+
+.pos-modal.is-open {
+  display: flex !important;
+}
+
+/* Tamanhos de Modais */
+.pos-modal.modal-sm { max-width: 380px; }
+.pos-modal.modal-md { max-width: 600px; }
+.pos-modal.modal-lg { max-width: 850px; }
+.pos-modal.modal-xl { max-width: 1050px; }
+
+/* ===== 3. CABEÇALHO DO MODAL (AZUL #2f7aa6 COM "X") ===== */
+.pos-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 44px;
+  background-color: var(--pos-bars-bg);
+  color: #ffffff;
+  padding: 0 14px;
+  flex-shrink: 0;
+}
+
+.pos-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+  color: #ffffff;
+}
+
+.pos-modal-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  border-radius: 3px;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.pos-modal-close-btn:hover {
+  background-color: var(--pos-danger);
+}
+
+/* ===== 4. CORPO DO MODAL ===== */
+.pos-modal-body {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  font-size: 14px;
+}
+
+/* ===== 5. RODAPÉ DO MODAL (BOTÕES DE AÇÃO) ===== */
+.pos-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 10px 16px;
+  background-color: #f7f9fa;
+  border-top: 1px solid var(--pos-border);
+  flex-shrink: 0;
+}
+
+/* ===== 6. GRUPOS COM MOLDURA E TÍTULO (FIELDSET ESTILO IMAGEM 2) ===== */
+.pos-fieldset-group {
+  position: relative;
+  border: 1px solid var(--pos-border);
+  border-radius: 3px;
+  padding: 14px 14px 10px 14px;
+  margin-bottom: 14px;
+  background-color: #ffffff;
+}
+
+.pos-fieldset-legend {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--pos-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0 6px;
+  margin-top: -22px;
+  background-color: #ffffff;
+}
+
+/* ===== 7. CAMPOS DE FORMULÁRIO E VALIDAÇÃO @error_class ===== */
+.form-group {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--pos-text-main);
+  margin-bottom: 4px;
+}
+
+.form-control {
+  width: 100%;
+  min-height: 38px;
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--pos-text-main);
+  background-color: #ffffff;
+  border: 1px solid var(--pos-border);
+  border-radius: 3px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-control:focus {
+  border-color: var(--pos-primary);
+  box-shadow: 0 0 0 2px rgba(60, 141, 188, 0.2);
+}
+
+/* Estado de Erro de Validação (.has-error) */
+.form-group.has-error .form-control,
+.form-control.has-error {
+  border-color: var(--pos-danger) !important;
+  background-color: #fff9f9;
+}
+
+.form-group.has-error label {
+  color: var(--pos-danger);
+}
+
+.help-block {
+  display: block;
+  font-size: 11px;
+  color: var(--pos-danger);
+  margin-top: 4px;
+  min-height: 15px;
+}
+/* ==========================================================================
+   NETPOS - CSS/POS/KEYPAD.CSS
+   Componente de teclado numérico táctil reutilizável para modais de
+   Quantidade, Preço, Desconto, PIN e Pagamento no POS
+   ========================================================================== */
+
+/* ===== 1. CONTENTOR DO TECLADO NUMÉRICO ===== */
+.pos-keypad-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+/* Mostrador do valor no teclado */
+.pos-keypad-display {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 48px;
+  padding: 0 14px;
+  background-color: #f7f9fa;
+  border: 1px solid var(--pos-border);
+  border-radius: 3px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--pos-text-main);
+  letter-spacing: 0.5px;
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+}
+
+/* Grelha de teclas numéricas tácteis */
+.pos-keypad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+/* Tecla táctil individual */
+.pos-keypad-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  background-color: #ffffff;
+  color: var(--pos-text-main);
+  border: 1px solid var(--pos-border);
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.1s ease, transform 0.05s ease;
+  user-select: none;
+}
+
+.pos-keypad-btn:hover {
+  background-color: #f0f3f6;
+  border-color: #b8bdc5;
+}
+
+.pos-keypad-btn:active {
+  background-color: #e2e6ea;
+  transform: translateY(1px);
+}
+
+/* Teclas especiais */
+.pos-keypad-btn.btn-clear {
+  color: var(--pos-danger);
+  font-size: 16px;
+}
+
+.pos-keypad-btn.btn-backspace {
+  color: var(--pos-text-muted);
+  font-size: 18px;
+}
+
+/* Botões rápidos de ajuste rápido (-1 e +1) */
+.pos-quick-steppers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.pos-stepper-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  background-color: #f4f6f9;
+  border: 1px solid var(--pos-border);
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--pos-text-main);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.pos-stepper-btn:hover {
+  background-color: #e9ecef;
+}
+/* ==========================================================================
+   NETPOS - CSS/POS/CHECKOUT.CSS
+   Estilos específicos do modal de finalização de venda (Checkout / Pagamentos)
+   Suporta pagamentos mistos (Dinheiro, TPA, Multicaixa Express, Transferência),
+   cálculo de troco ao vivo e validação de NIF para valores elevados.
+   ========================================================================== */
+
+/* ===== 1. ESTRUTURA GERAL DO MODAL DE CHECKOUT ===== */
+.pos-checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Painel de Totais e Meios à Esquerda */
+.pos-checkout-left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Painel de Teclado e Valores Rápidos à Direita */
+.pos-checkout-right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ===== 2. CARTÃO DE TOTAIS DA VENDA ===== */
+.pos-checkout-totals-box {
+  background-color: #f7f9fa;
+  border: 1px solid var(--pos-border);
+  border-radius: 3px;
+  padding: 12px 14px;
+}
+
+.pos-checkout-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.pos-checkout-row.highlight-total {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--pos-navy);
+}
+
+.pos-checkout-row.highlight-paid {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--pos-success);
+}
+
+.pos-checkout-row.highlight-balance {
+  border-top: 1px solid var(--pos-border);
+  padding-top: 8px;
+  margin-top: 8px;
+  margin-bottom: 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--pos-primary);
+}
+
+.pos-checkout-row.highlight-balance.has-due {
+  color: var(--pos-danger);
+}
+
+/* ===== 3. SELEÇÃO DE MEIOS DE PAGAMENTO (TILES) ===== */
+.pos-payment-methods-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.pos-method-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 8px;
+  background-color: #ffffff;
+  color: var(--pos-text-main);
+  border: 1px solid var(--pos-border);
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.pos-method-tile i {
+  font-size: 16px;
+}
+
+.pos-method-tile:hover {
+  background-color: #f4f6f9;
+  border-color: #b8bdc5;
+}
+
+.pos-method-tile.is-active {
+  background-color: var(--pos-primary);
+  border-color: var(--pos-primary);
+  color: #ffffff;
+}
+
+/* Linhas dos Meios Ativos (onde se introduz valor e referência) */
+.pos-active-methods-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 170px;
+  overflow-y: auto;
+  border: 1px solid var(--pos-border);
+  border-radius: 3px;
+  padding: 8px;
+  background-color: #ffffff;
+}
+
+.pos-active-method-row {
+  display: grid;
+  grid-template-columns: 100px 1fr auto;
+  gap: 6px;
+  align-items: center;
+  background-color: #fafafa;
+  padding: 6px 8px;
+  border: 1px solid var(--pos-border-subtle);
+  border-radius: 3px;
+}
+
+.pos-active-method-row .method-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--pos-navy);
+}
+
+.pos-active-method-row .form-control {
+  min-height: 32px;
+  padding: 4px 8px;
+  font-size: 13px;
+}
+
+.pos-btn-remove-method {
+  background: transparent;
+  border: none;
+  color: var(--pos-danger);
+  cursor: pointer;
+  padding: 4px 6px;
+  font-size: 14px;
+}
+
+/* ===== 4. BOTÕES RÁPIDOS DE VALOR EM KWZ ===== */
+.pos-quick-cash-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.pos-quick-cash-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  background-color: #ffffff;
+  border: 1px solid var(--pos-border);
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--pos-navy);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.pos-quick-cash-btn:hover {
+  background-color: #eef2f5;
+  border-color: var(--pos-primary);
+}
+
+/* ===== 5. AVISO DE NIF OBRIGATÓRIO (VALOR >= 50.000 Kz) ===== */
+.pos-nif-warning-alert {
+  display: none;
+  background-color: #fff2f2;
+  border: 1px solid var(--pos-danger);
+  border-radius: 3px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--pos-danger);
+  margin-top: 10px;
+}
+
+.pos-nif-warning-alert.is-visible {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+}
+/* ==========================================================================
+   NETPOS - CSS/POS/RECEIPT.CSS
+   Estilos de pré-visualização e impressão de talões térmicos (80mm e 58mm)
+   Inclui regras de @media print que ocultam tudo excepto o talão fiscal
+   ========================================================================== */
+
+/* ===== 1. CONTENTOR DO TALÃO NO MODAL ===== */
+.pos-receipt-wrapper {
+  display: flex;
+  justify-content: center;
+  background-color: #525659;
+  padding: 16px;
+  overflow-y: auto;
+  max-height: 480px;
+  border-radius: 3px;
+}
+
+/* O talão físico em papel térmico branco */
+.pos-thermal-receipt {
+  background-color: #ffffff;
+  color: #000000;
+  width: 320px; /* Padrão 80mm */
+  padding: 16px 14px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  line-height: 1.35;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+}
+
+.pos-thermal-receipt.format-58mm {
+  width: 230px; /* Formato estreito 58mm */
+  padding: 10px 8px;
+  font-size: 10px;
+}
+
+/* Cabeçalho do Talão */
+.pos-receipt-header {
+  text-align: center;
+  border-bottom: 1px dashed #000000;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.pos-receipt-logo {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+
+.pos-receipt-company {
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.pos-receipt-meta {
+  font-size: 10px;
+  color: #222222;
+}
+
+/* Título do Documento Fiscal */
+.pos-receipt-doc-title {
+  text-align: center;
+  font-weight: 800;
+  font-size: 13px;
+  margin: 8px 0 4px 0;
+  text-transform: uppercase;
+}
+
+.pos-receipt-doc-number {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* Tabela de Linhas do Talão */
+.pos-receipt-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 8px;
+}
+
+.pos-receipt-table th {
+  border-bottom: 1px solid #000000;
+  border-top: 1px solid #000000;
+  padding: 4px 0;
+  text-align: left;
+  font-size: 10px;
+}
+
+.pos-receipt-table td {
+  padding: 4px 0;
+  vertical-align: top;
+}
+
+.pos-receipt-table .text-right {
+  text-align: right;
+}
+
+/* Totais do Talão */
+.pos-receipt-totals {
+  border-top: 1px dashed #000000;
+  padding-top: 6px;
+  margin-top: 6px;
+}
+
+.pos-receipt-total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
+}
+
+.pos-receipt-total-row.grand-total {
+  font-size: 14px;
+  font-weight: 800;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  padding: 4px 0;
+  margin: 6px 0;
+}
+
+/* Resumo de Impostos (IVA) */
+.pos-receipt-tax-table {
+  width: 100%;
+  font-size: 9px;
+  margin-top: 8px;
+  border-top: 1px dashed #000000;
+  padding-top: 6px;
+}
+
+/* Assinatura Digital e Menções Fiscais AGT */
+.pos-receipt-fiscal-footer {
+  text-align: center;
+  font-size: 9px;
+  margin-top: 10px;
+  border-top: 1px dashed #000000;
+  padding-top: 8px;
+}
+
+.pos-receipt-hash {
+  font-weight: 700;
+  margin-top: 4px;
+  letter-spacing: 1px;
+}
+
+.pos-receipt-qrcode {
+  width: 90px;
+  height: 90px;
+  margin: 8px auto 4px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #000000;
+  padding: 4px;
+}
+
+.pos-receipt-qrcode svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Barra de Estado AGT no Cabeçalho do Modal */
+.pos-receipt-agt-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.pos-receipt-agt-status.pending {
+  background-color: var(--pos-warning);
+  color: #ffffff;
+}
+
+.pos-receipt-agt-status.accepted {
+  background-color: var(--pos-success);
+  color: #ffffff;
+}
+
+/* ===== 2. REGRAS DE IMPRESSÃO (@media print) ===== */
+@media print {
+  /* Ocultar absolutamente tudo no ecrã */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Exibir exclusivamente o conteúdo do talão */
+  .pos-thermal-receipt,
+  .pos-thermal-receipt * {
+    visibility: visible;
+  }
+
+  .pos-modal-backdrop,
+  .pos-modal {
+    position: static !important;
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    width: auto !important;
+    max-width: none !important;
+    display: block !important;
+  }
+
+  .pos-modal-header,
+  .pos-modal-footer,
+  .pos-topbar,
+  .pos-main,
+  .pos-statusbar,
+  .toast-container {
+    display: none !important;
+  }
+
+  .pos-receipt-wrapper {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  .pos-thermal-receipt {
+    width: 100% !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  @page {
+    margin: 0;
+    size: auto;
+  }
+}
+/* ==========================================================================
+   NETPOS - CSS/POS/LOCK.CSS
+   Estilos de bloqueio total do ecrã do POS (Lock Screen)
+   Sobreposição bloqueante, sem ESC nem fecho acidental. Requer PIN de 4 dígitos.
+   ========================================================================== */
+
+/* Modal de Bloqueio em Ecrã Inteiro */
+.pos-lock-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  border-radius: 0 !important;
+  border: none !important;
+  background-color: var(--pos-navy);
+  color: #ffffff;
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.pos-lock-modal.is-open {
+  display: flex !important;
+}
+
+.pos-lock-card {
+  width: 100%;
+  max-width: 360px;
+  background-color: #ffffff;
+  color: var(--pos-text-main);
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  padding: 24px;
+  text-align: center;
+}
+
+.pos-lock-avatar-wrap {
+  margin-bottom: 12px;
+}
+
+.pos-lock-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: var(--pos-primary);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 700;
+  border: 3px solid rgba(60, 141, 188, 0.2);
+}
+
+.pos-lock-user-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--pos-navy);
+  margin-bottom: 2px;
+}
+
+.pos-lock-notice {
+  font-size: 12px;
+  color: var(--pos-text-muted);
+  margin-bottom: 16px;
+}
+
+/* Bolinhas do PIN Mascarado */
+.pos-pin-dots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.pos-pin-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--pos-border);
+  background-color: transparent;
+  transition: all 0.15s ease;
+}
+
+.pos-pin-dot.is-filled {
+  background-color: var(--pos-primary);
+  border-color: var(--pos-primary);
+}
+
+/* Garante que só o modal com .is-open é visível */
+.pos-modal:not(.is-open),
+.pos-lock-overlay:not(.is-open) {
+  display: none !important;
+}

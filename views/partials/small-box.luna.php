@@ -4,7 +4,7 @@
     <div class="col-12 col-md-4 col-lg-2">
         <div class="small-box bg-blue">
             <div class="inner">
-                <h3>1.240</h3>
+                <h3>{{ number_short($totalProduct) }}</h3>
                 <p>Total de Produtos</p>
             </div>
             <div class="icon">
@@ -20,7 +20,7 @@
     <div class="col-12 col-md-4 col-lg-2">
         <div class="small-box bg-navy">
             <div class="inner">
-                <h3>18</h3>
+                <h3>{{ number_short($totalCategory) }}</h3>
                 <p>Categorias Activas</p>
             </div>
             <div class="icon">
@@ -68,7 +68,7 @@
     <div class="col-12 col-md-4 col-lg-2">
         <div class="small-box bg-red">
             <div class="inner">
-                <h3>9</h3>
+                <h3>{{ number_short($totalProductCrit) }}</h3>
                 <p>Stock Crítico</p>
             </div>
             <div class="icon">
@@ -84,7 +84,7 @@
     <div class="col-12 col-md-4 col-lg-2">
         <div class="small-box bg-yellow">
             <div class="inner">
-                <h3>320</h3>
+                <h3>{{ number_short($totalCustomers) }}</h3>
                 <p>Clientes Registados</p>
             </div>
             <div class="icon">

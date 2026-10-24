@@ -123,13 +123,6 @@ class ProductController
      * @param  int                $id ID do produto extraído da rota.
      * @return mixed Resposta JSON (404 se o produto não existir).
      */
-    /**
-     * Actualiza um produto existente.
-     *
-     * @param  EditProductRequest $req
-     * @param  Response           $res
-     * @return mixed Resposta JSON (404 se o produto não existir).
-     */
     public function update(EditProductRequest $req, Response $res)
     {
         $data    = $req->validated();
@@ -147,6 +140,34 @@ class ProductController
         return $res->json([
             'success' => true,
             'message' => 'Produto actualizado com sucesso.',
+        ]);
+    }
+
+    /**
+     * Actualiza um produto existente.
+     *
+     * @param  EditProductRequest $req
+     * @param  Response           $res
+     * @param  int                $id ID do produto extraído da rota.
+     * @return mixed Resposta JSON (404 se o produto não existir).
+     */
+    public function delete(EditProductRequest $req, Response $res, array $param)
+    {
+        $id = (int) $param['id'];
+        $product = Product::find(($id ?? 0));
+
+        if (!$product) {
+            return $res->json([
+                'success' => false,
+                'message' => 'Produto não encontrado.',
+            ], 404);
+        }
+
+        $product->delete();
+
+        return $res->json([
+            'success' => true,
+            'message' => 'Produto deletado com sucesso.',
         ]);
     }
 

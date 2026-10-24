@@ -12,13 +12,13 @@ declare(strict_types=1);
 */
 
 use Slenix\Http\Routing\Router;
+use App\Middlewares\AdminMiddleware;
 use App\Controllers\Admin\ProductController;
+use App\Controllers\Admin\ReportsController;
 use App\Controllers\Admin\CustomersController;
 use App\Controllers\Admin\DashboardController;
 use App\Controllers\Admin\EmployeesController;
-use App\Controllers\Admin\ReportsController;
 use App\Controllers\Admin\SettingsController;
-use App\Middlewares\AdminMiddleware;
 
 Router::group(['middleware' => ['auth', AdminMiddleware::class]], function (): void {
 
@@ -29,10 +29,10 @@ Router::group(['middleware' => ['auth', AdminMiddleware::class]], function (): v
     Router::get('/products', [ProductController::class, 'index'])->name('product');
     Router::post('/products', [ProductController::class, 'store'])->name('products.store');
     Router::post('/products/update', [ProductController::class, 'update'])->name('products.update');
+    Router::post('/products/delete/{id}', [ProductController::class, 'delete'])->name('products.delete');
 
     // Outros módulos administrativos
     Router::get('/customers', [CustomersController::class, 'index'])->name('customers');
-    Router::post('/customers', [CustomersController::class, 'store'])->name('customers.store');
     Router::post('/customers/update', [CustomersController::class, 'update'])->name('customers.update');
     
     // Módulo de Funcionários
